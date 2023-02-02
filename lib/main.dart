@@ -1,3 +1,4 @@
+import 'package:Smartpay/ui/splash_screen/splash_screen.dart';
 import 'package:Smartpay/utils/app_fonts.dart';
 import 'package:Smartpay/utils/app_provider.dart';
 import 'package:Smartpay/utils/constants.dart';
@@ -22,40 +23,16 @@ class MyApp extends StatelessWidget {
       builder: (BuildContext context, AppProvider appProvider, Widget? child){
         return MaterialApp(
           key: appProvider.key,
-          title: Constants.appName,
+          title: AppStrings.appName,
           debugShowCheckedModeBanner: false,
           navigatorKey: appProvider.navigatorKey,
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: const MyHomePage(),
+          home: const SplashScreen(),
         );
       },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children:  <Widget>[
-            AppFontsStyle.getAppTextViewBold("Smartpay", size: 32.0)
-
-          ],
-        ),
-      ),
-    );
-  }
-}
