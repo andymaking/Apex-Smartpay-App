@@ -5,19 +5,20 @@ import 'package:Smartpay/ui/components/app_toolbar.dart';
 import 'package:Smartpay/ui/components/button.dart';
 import 'package:Smartpay/ui/components/custom_textfield.dart';
 import 'package:Smartpay/ui/sign_in/sign_in_view_model.dart';
+import 'package:Smartpay/ui/sign_up/sign_up_view_model.dart';
 import 'package:Smartpay/utils/app_text.dart';
 import 'package:Smartpay/utils/constants.dart';
 import 'package:flutter/material.dart';
 import '../components/social_auth_button.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  _LoginScreen createState() => _LoginScreen();
+  _SignUpScreen createState() => _SignUpScreen();
 }
 
-class _LoginScreen extends State<SignInScreen> {
+class _SignUpScreen extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   final FocusScopeNode _node = FocusScopeNode();
 
@@ -30,7 +31,7 @@ class _LoginScreen extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        body: BaseView<SignInViewModel>(
+        body: BaseView<SignUpViewModel>(
           onModelReady: (model) {
             model.getValues();
           },
@@ -50,11 +51,31 @@ class _LoginScreen extends State<SignInScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            AppTextView.getAppTextViewBold(AppStrings.hiThere),
-                            const SizedBox(
-                              height: 8,
+                            Container(
+                              child: Text.rich(
+                                  TextSpan(
+                                  text: AppStrings.createA,
+                                  semanticsLabel: AppStrings.smart,
+                                  style: TextStyle(
+                                    fontFamily: AppStrings.fontFamily,
+                                    color: ThemeConfig.darkColor,
+                                    fontSize: AppFontSizes.headingFontSize24,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: AppStrings.smartPay,
+                                      semanticsLabel: AppStrings.smartPay,
+                                      style: TextStyle(
+                                        fontFamily: AppStrings.fontFamily,
+                                        color: ThemeConfig.darkAccent,
+                                        fontSize: AppFontSizes.headingFontSize24,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ])),
                             ),
-                            AppTextView.getAppTextView(AppStrings.welcomeBack),
+                            AppTextView.getAppTextViewBold(AppStrings.account),
                             const SizedBox(
                               height: 30,
                             ),
@@ -65,37 +86,14 @@ class _LoginScreen extends State<SignInScreen> {
                               keyboardType: TextInputType.emailAddress,
                             ),
                             const SizedBox(
-                              height: 16,
-                            ),
-                            AppPasswordField(
-                              hint: AppStrings.password,
-                              onChanged: (val) {
-                                model.setPassword(val);
-                              },
-                              controller: model.passwordController,
-                            ),
-                            const SizedBox(
-                              height: 25,
-                            ),
-                            GestureDetector(
-                              onTap: (){
-                               //TODO
-                              },
-                              child: AppTextView.getAppTextViewBold(
-                                AppStrings.forgotPassword,
-                                color: ThemeConfig.darkAccent,
-                                size: 16,
-                              ),
-                            ),
-                            const SizedBox(
                               height: 24,
                             ),
                             AppButton(
                                 onPressed: () {
                                   //TODO
                                 },
-                                title: AppStrings.signIn,
-                                enabled: true),
+                                title: AppStrings.signUp,
+                                enabled: model.emailController.text.isNotEmpty ? true : false),
                             const SizedBox(
                               height: 32,
                             ),
@@ -162,7 +160,7 @@ class _LoginScreen extends State<SignInScreen> {
                           child: GestureDetector(
                             onTap: () {
                               Navigator.of(context)
-                                  .pushNamed(AppRoutes.signUp);
+                                  .pushNamed(AppRoutes.signIn);
                             },
                             child: Container(
                               alignment: Alignment.bottomCenter,
@@ -178,7 +176,7 @@ class _LoginScreen extends State<SignInScreen> {
                                     width: 2,
                                   ),
                                   AppTextView.getAppTextViewBold(
-                                      AppStrings.signUp,
+                                      AppStrings.signIn,
                                       color: ThemeConfig.darkAccent,
                                       size: 16),
                                 ],

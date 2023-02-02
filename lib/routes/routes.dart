@@ -1,5 +1,6 @@
 import 'package:Smartpay/ui/components/route_error_page.dart';
 import 'package:Smartpay/ui/sign_in/sign_in.dart';
+import 'package:Smartpay/ui/sign_up/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,11 +23,16 @@ class AppRouter {
       //   );
       case AppRoutes.signIn:
         return MaterialPageRoute<dynamic>(
-          builder: (_) => SignInScreen(),
+          builder: (_) => const SignInScreen(),
           settings: settings,
-          //fullscreenDialog: true,
+          fullscreenDialog: true,
         );
-
+      case AppRoutes.signUp:
+        return MaterialPageRoute<dynamic>(
+          builder: (_) => const SignUpScreen(),
+          settings: settings,
+          fullscreenDialog: true,
+        );
 
       default:
         return MaterialPageRoute<dynamic>(
