@@ -1,9 +1,10 @@
 
 import 'package:flutter/material.dart';
 
-class Constants {
-  //App related strings
+class AppStrings {
   static String appName = 'Smartpay';
+  static String smart = 'Smart';
+  static String pay = 'pay.';
 }
 
 class Sized16Container extends StatelessWidget {
@@ -20,4 +21,8 @@ class Sized16Container extends StatelessWidget {
       child: child,
     );
   }
+}
+
+class AppImages{
+  static const String appSplashLogo = "assets/images/ic_splash_logo.svg";
 }
