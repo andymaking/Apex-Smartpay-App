@@ -55,7 +55,7 @@ class SocialAuthButtons extends StatelessWidget {
         padding: EdgeInsets.zero,
         onPressed: onPressed,
         child: Container(
-          height: 40,
+          height: 56,
           padding: const EdgeInsets.symmetric(
               vertical: 2.5,),
           decoration: BoxDecoration(

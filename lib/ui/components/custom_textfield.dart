@@ -31,6 +31,7 @@ class AppTextField extends StatelessWidget {
     return Container(
       height: 56.h,
       child: TextField(
+        autocorrect: false,
         obscureText: obscureText,
         controller: controller,
         onChanged: (value) => onChanged!(value),
@@ -102,6 +103,7 @@ class _AppPasswordFieldState extends State<AppPasswordField> {
     return Container(
       height: 56.h,
       child: TextField(
+        autocorrect: false,
         obscureText: obscureText,
         obscuringCharacter: '●',
         cursorColor: ThemeConfig.darkColor,

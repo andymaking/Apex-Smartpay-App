@@ -7,12 +7,16 @@ class AppStrings {
   static String smart = 'Smart';
   static String pay = 'pay.';
   static String email = "Email";
+  static String smartPay = 'Smartpay';
   static String password = "Password";
   static String hiThere = 'Hi There! 👋';
   static String signUp = "Sign Up";
   static String signIn = "Sign In";
+  static String createA = "Create a ";
+  static String account = "account";
   static String forgotPassword = "Forgot Password?";
   static String dontHaveAnAccount = "Don’t have an account? ";
+  static String alreadyHaveAnAccount = "Already have an account? ";
   static String welcomeBack = "Welcome back, Sign in to your account";
 }
 
