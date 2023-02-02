@@ -90,7 +90,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                             ),
                             AppButton(
                                 onPressed: () {
-                                  //TODO
+                                  Navigator.of(context).pushNamed(AppRoutes.verifyOtp);
                                 },
                                 title: AppStrings.signUp,
                                 enabled: model.emailController.text.isNotEmpty ? true : false),
