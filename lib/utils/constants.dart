@@ -10,6 +10,8 @@ class AppStrings {
   static String smartPay = 'Smartpay';
   static String password = "Password";
   static String hiThere = 'Hi There! 👋';
+  static String verifyItsYou = 'Verify it’s you';
+  static String confirm = "Confirm";
   static String signUp = "Sign Up";
   static String signIn = "Sign In";
   static String createA = "Create a ";
@@ -18,6 +20,9 @@ class AppStrings {
   static String dontHaveAnAccount = "Don’t have an account? ";
   static String alreadyHaveAnAccount = "Already have an account? ";
   static String welcomeBack = "Welcome back, Sign in to your account";
+  static String weSentACode = "We send a code to ( %s ). "
+      "Enter it here to verify your identity";
+
 }
 
 class Sized24Container extends StatelessWidget {

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class AppTextView {
 
   static Widget getAppTextView(text,
-      {size, color, textAlign, height, letterSpacing, TextDecoration? textDecoration}) {
+      {size, color, textAlign, weight, height, letterSpacing, TextDecoration? textDecoration}) {
     final displayText = text.toString().toLowerCase() == "null" ? "" : text;
     final textSize = size == null ? null : double.parse(size.toString());
     return Text(displayText,
@@ -14,7 +14,7 @@ class AppTextView {
             fontFamily: AppStrings.fontFamily,
             color: color ?? ThemeConfig.greyColor,
             fontSize: textSize ?? AppFontSizes.titleFontSize16,
-            fontWeight: FontWeight.w400,
+            fontWeight: weight ?? FontWeight.w400,
             fontStyle: FontStyle.normal,
             decoration: textDecoration ?? TextDecoration.none,
             height: height ?? 1.5,  letterSpacing: letterSpacing ?? 0.3
