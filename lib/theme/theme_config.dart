@@ -8,6 +8,7 @@ class ThemeConfig {
   static Color lightBG = Colors.white;
   static Color darkColor = const Color(0xff111827);
   static Color greyColor = const Color(0xff6B7280);
+  static Color lightGreyColor = const Color(0xffE5E7EB);
 
 
   static ThemeData lightTheme = ThemeData(

@@ -19,13 +19,15 @@ class AppFontsStyle {
     return Text(displayText,
         textAlign: textAlign ?? TextAlign.center,
         style: TextStyle(
-            fontFamily: AppFontsStyle.fontFamily,
-            color: color ?? ThemeConfig.greyColor,
-            fontSize: textSize ?? AppFontsStyle.titleFontSize16,
-            fontWeight: FontWeight.w400,
-            fontStyle: FontStyle.normal,
-            decoration: textDecoration ?? TextDecoration.none,
-            height: 1.5));
+          fontFamily: AppFontsStyle.fontFamily,
+          color: color ?? ThemeConfig.greyColor,
+          fontSize: textSize ?? AppFontsStyle.titleFontSize16,
+          fontWeight: FontWeight.w400,
+          fontStyle: FontStyle.normal,
+          decoration: textDecoration ?? TextDecoration.none,
+          height: 1.5,
+          letterSpacing: 0.3,
+        ));
   }
 
   static Widget getAppTextViewBold(text,

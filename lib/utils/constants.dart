@@ -7,17 +7,17 @@ class AppStrings {
   static String pay = 'pay.';
 }
 
-class Sized16Container extends StatelessWidget {
+class Sized24Container extends StatelessWidget {
   final Widget? child;
   final Decoration? decoration;
 
-  const Sized16Container({super.key, this.child, this.decoration});
+  const Sized24Container({super.key, this.child, this.decoration});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: decoration,
-      margin: const EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.symmetric(horizontal: 24),
       child: child,
     );
   }
@@ -25,4 +25,6 @@ class Sized16Container extends StatelessWidget {
 
 class AppImages{
   static const String appSplashLogo = "assets/images/ic_splash_logo.svg";
+  static const String slide1Image = "assets/images/slide1.png";
+  static const String slide2Image = "assets/images/slide2.png";
 }
