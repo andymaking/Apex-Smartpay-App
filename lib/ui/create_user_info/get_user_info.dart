@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'package:Smartpay/core/enum/view_state.dart';
 import 'package:Smartpay/routes/locator.dart';
+import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/theme/theme_config.dart';
-import 'package:Smartpay/ui/base_ui.dart';
 import 'package:Smartpay/ui/components/app_toolbar.dart';
 import 'package:Smartpay/ui/components/button.dart';
 import 'package:Smartpay/ui/components/country_view.dart';
 import 'package:Smartpay/ui/components/custom_textfield.dart';
 import 'package:Smartpay/ui/components/textfield_search.dart';
-import 'package:Smartpay/ui/id/get_user_info_view_model.dart';
+import 'package:Smartpay/ui/create_user_info/get_user_info_view_model.dart';
 import 'package:Smartpay/utils/app_text.dart';
 import 'package:Smartpay/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -175,7 +175,7 @@ class _GetUserInfoScreen extends State<GetUserInfoScreen> {
                         ),
                         AppButton(
                             onPressed: () {
-                              //TODO
+                              Navigator.of(context).pushNamed(AppRoutes.setUserPin);
                             },
                             title: "Continue",
                             enabled: isValidUserInfo ? true : false),

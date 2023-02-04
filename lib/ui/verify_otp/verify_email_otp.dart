@@ -6,7 +6,7 @@ import 'package:Smartpay/utils/otp_timer_utils.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:Smartpay/ui/base_ui.dart';
 import 'package:Smartpay/ui/components/app_toolbar.dart';
-import 'package:Smartpay/ui/verify_otp/email-verification.vm.dart';
+import 'package:Smartpay/ui/verify_otp/email_verification_view_model.dart';
 import 'package:Smartpay/utils/app_text.dart';
 import 'package:Smartpay/utils/constants.dart';
 import 'package:flutter/material.dart';
