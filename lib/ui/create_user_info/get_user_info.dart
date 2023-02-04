@@ -6,6 +6,7 @@ import 'package:Smartpay/theme/theme_config.dart';
 import 'package:Smartpay/ui/components/app_toolbar.dart';
 import 'package:Smartpay/ui/components/button.dart';
 import 'package:Smartpay/ui/components/country_view.dart';
+import 'package:Smartpay/ui/components/custom_dialog.dart';
 import 'package:Smartpay/ui/components/custom_textfield.dart';
 import 'package:Smartpay/ui/components/textfield_search.dart';
 import 'package:Smartpay/ui/create_user_info/get_user_info_view_model.dart';
@@ -69,6 +70,7 @@ class _GetUserInfoScreen extends State<GetUserInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final email = ModalRoute.of(context)!.settings.arguments as String;
     final isValidUserInfo = useProvider(validUserInfoProvider);
     final userInfoViewState = useProvider(userInfoStateProvider);
     final countryN = useProvider(userInfoProvider).currentUserCountry;
@@ -76,7 +78,10 @@ class _GetUserInfoScreen extends State<GetUserInfoScreen> {
     final currentSelectedCountry =
         useProvider(userInfoProvider).currentUserCountry;
     final model = context.read(userInfoProvider);
+    model.email = email;
 
+    context.read(userInfoProvider).email = email.toString();
+    print("showing email $email");
     print("showing just selected $countryN $countryNn");
 
     return Scaffold(
@@ -173,12 +178,17 @@ class _GetUserInfoScreen extends State<GetUserInfoScreen> {
                         const SizedBox(
                           height: 25,
                         ),
-                        AppButton(
-                            onPressed: () {
-                              Navigator.of(context).pushNamed(AppRoutes.setUserPin);
-                            },
-                            title: "Continue",
-                            enabled: isValidUserInfo ? true : false),
+                        userInfoViewState == ViewState.loading
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                color: ThemeConfig.darkAccent,
+                              ))
+                            : AppButton(
+                                onPressed: () {
+                                  observeRegistrationState(context);
+                                },
+                                title: "Continue",
+                                enabled: isValidUserInfo ? true : false),
                         const SizedBox(
                           height: 32,
                         ),
@@ -195,6 +205,27 @@ class _GetUserInfoScreen extends State<GetUserInfoScreen> {
         ),
       ),
     );
+  }
+
+  void observeRegistrationState(BuildContext context) async {
+    final viewModel = context.read(userInfoProvider);
+    print('fullName ${viewModel.fullName}');
+    print('userName ${viewModel.userName}');
+    print('email ${viewModel.email}');
+    print('country ${viewModel.selectedCountryCode}');
+    print('password ${viewModel.password}');
+    var mail = await viewModel.registerUser(
+      viewModel.fullName,
+      viewModel.userName,
+      viewModel.email,
+      viewModel.selectedCountryCode,
+      viewModel.password,
+      context
+    );
+    if (viewModel.viewState == ViewState.success) {
+      print('register user details $mail');
+      Navigator.of(context).pushNamed(AppRoutes.setUserPin);
+    }
   }
 
   @override
@@ -360,9 +391,8 @@ class _GetUserInfoScreen extends State<GetUserInfoScreen> {
                                           countryList[index].countryCode;
                                       print(
                                           "country object:: $_selectedOption");
-                                      print(
-                                          "clicked country object:: "
-                                              "${countryList[index].countryCode}");
+                                      print("clicked country object:: "
+                                          "${countryList[index].countryCode}");
                                       context.read(userInfoProvider).country =
                                           value.trim();
                                     },

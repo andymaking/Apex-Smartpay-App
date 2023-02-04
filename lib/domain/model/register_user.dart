@@ -4,51 +4,42 @@ class RegisterUserResponse {
   String? message;
   RegisterData? data;
 
-  RegisterUserResponse({
-    this.status,
+  RegisterUserResponse({this.status,
     this.message,
-    this.data
-  });
+    this.data,});
 
-  RegisterUserResponse.fromJson(dynamic json) {
-    status = json['status'];
-    message = json['message'];
-    data = json['data'] != null ? RegisterData.fromJson(json['data']) : null;
+  factory RegisterUserResponse.fromJson(Map<String, dynamic> json) {
+    return RegisterUserResponse(
+        status: json['status'] as bool?,
+        message: json['message'] as String?,
+        data: RegisterData.fromJson(json['data']));
   }
 
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map['status'] = status;
-    map['message'] = message;
-    if (data != null) {
-      map['data'] = data?.toJson();
-    }
-    return map;
-  }
-
+  Map<String, dynamic> toJson() => {
+    'status': status,
+    'message': message,
+    'data': data?.toJson()
+  };
 }
+
 
 class RegisterData {
   RegisterUserData? user;
   String? token;
 
-  RegisterData({
-    this.user,
-    this.token,
-  });
+  RegisterData({this.user, this.token,});
 
-  RegisterData.fromJson(dynamic json) {
-    user = json['user'];
-    token = json['token'];
+  factory RegisterData.fromJson(Map<String, dynamic> json) {
+    return RegisterData(
+        user: RegisterUserData.fromJson(json['user']),
+        token: json['token'] as String?,
+    );
   }
 
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map['user'] = user;
-    map['token'] = token;
-    return map;
-  }
-
+  Map<String, dynamic> toJson() => {
+    'user': user?.toJson(),
+    'token': token,
+  };
 }
 
 class RegisterUserData {
@@ -66,22 +57,21 @@ class RegisterUserData {
     this.id,
   });
 
-  RegisterUserData.fromJson(dynamic json) {
-    fullName = json['full_name'];
-    userName = json['username'];
-    email = json['email'];
-    country = json['country'];
-    id = json['id'];
-  }
+  factory RegisterUserData.fromJson(Map<String, dynamic> json) {
+    return RegisterUserData(
+      fullName: json['full_name'] as String?,
+      userName: json['username'] as String?,
+      email: json['email'] as String?,
+      country: json['country'] as String?,
+      id: json['id'] as String?,
+    );}
 
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map['full_name'] = fullName;
-    map['username'] = userName;
-    map['email'] = email;
-    map['country'] = country;
-    map['id'] = id;
-    return map;
-  }
+  Map<String, dynamic> toJson() => {
+    'full_name': fullName,
+    'userName': userName,
+    'email': email,
+    'country': country,
+    'id': id,
+  };
 
 }

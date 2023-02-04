@@ -1,3 +1,4 @@
+import 'package:Smartpay/data/core/manager/SessionManager.dart';
 import 'package:Smartpay/data/core/network_config.dart';
 import 'package:Smartpay/data/remote/user_remote.dart';
 import 'package:Smartpay/data/remote/user_remote_impl.dart';
@@ -51,6 +52,7 @@ dependenciesInjectorSetup() {
   getIt.registerLazySingleton<NavigationService>(() => NavigationService());
   getIt.registerLazySingleton<StorageService>(() => StorageService());
   getIt.registerLazySingleton<SharedPreference>(() => SharedPreference());
+  getIt.registerLazySingleton<SessionManager>(() => SessionManager());
 
   getIt.registerFactory<UserRemote>(() => UserRemoteImpl(getIt<Dio>()));
   getIt.registerFactory<UserRepository>(

@@ -1,11 +1,16 @@
 import 'package:Smartpay/data/core/enum/view_state.dart';
+import 'package:Smartpay/data/repository/user_repository.dart';
 import 'package:Smartpay/domain/model/country_model.dart';
+import 'package:Smartpay/domain/model/register_user.dart';
+import 'package:Smartpay/routes/locator.dart';
 import 'package:Smartpay/ui/base_view_model.dart';
+import 'package:Smartpay/ui/components/custom_dialog.dart';
 import 'package:Smartpay/ui/components/toast.dart';
 import 'package:flutter/cupertino.dart';
 
 class GetUserInfoViewModel extends BaseViewModel {
-  List<CountryModel> userGenders = [];
+  final userRepository = getIt<UserRepository>();
+  List<CountryModel> userCountry = [];
   Set<String> currentUserCountry = {};
   String selectedCountryName = "";
   String selectedCountryCode = "";
@@ -15,11 +20,13 @@ class GetUserInfoViewModel extends BaseViewModel {
   String userName = "";
   String country = "";
   String password = "";
+  String email = "";
+  String token = "";
   bool isValidUserInfo = false;
   String index = "";
 
   ViewState _state = ViewState.idle;
-
+  @override
   ViewState get viewState => _state;
 
   TextEditingController fullNameController = TextEditingController();
@@ -58,17 +65,23 @@ class GetUserInfoViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void getValues() {
-    fullNameController.text = fullName ?? "";
-    userNameController.text = userName ?? "";
-    countryController.text = selectedCountryCode ?? "";
-    passwordController.text = password ?? "";
-  }
+
 
   void validUserInfo() {
     isValidUserInfo = fullName.isNotEmpty && userName.isNotEmpty &&
-        selectedCountryCode.isNotEmpty && password.isNotEmpty;
+        selectedCountryCode.isNotEmpty && isValidPassword() && isValidPasswordPattern();
     notifyListeners();
+  }
+
+  bool isValidPassword() {
+    return password.isNotEmpty && password.length >= 7;
+  }
+
+  bool isValidPasswordPattern() {
+    Pattern pattern =
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])';
+    RegExp regex = RegExp(pattern.toString());
+    return regex.hasMatch(password);
   }
 
   void setSelectedCountry(name) {
@@ -118,15 +131,25 @@ class GetUserInfoViewModel extends BaseViewModel {
     showCustomToast(errorMessage);
   }
 
-  userInfo() async {
-    viewState = ViewState.idle;
+  Future<RegisterUserResponse?> registerUser(String fullName, String userName,
+      String email, String country, String password, BuildContext context) async {
     try {
-      //TODO
-    } catch (e) {
-      viewState = ViewState.idle;
-
-      showCustomToast(e.toString());
+      setViewState(ViewState.loading);
+      var response = await userRepository.register(fullName, userName, email, country, password);
+      setViewState(ViewState.success);
+      //token = "${response?.data?.token!}";
+      print("Showing register response::: $response");
+      return response;
+    } catch (error) {
+      setViewState(ViewState.error);
+      setError(error.toString());
+      await showTopModalSheet<String>(
+          context: context,
+          child: ShowDialog(
+            title: errorMessage,
+            isError: true,
+            onPressed: () {},
+          ));
     }
-    notifyListeners();
   }
 }

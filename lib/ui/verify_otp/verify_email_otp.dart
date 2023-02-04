@@ -203,7 +203,7 @@ class _EmailVerificationState extends State<EmailVerification> {
     var mail = await viewModel.verifyEmailToken(viewModel.email, viewModel.token);
     if (viewModel.viewState == ViewState.success) {
       print('email token details $mail');
-      Navigator.of(context).pushNamed(AppRoutes.getUserInfo);
+      Navigator.of(context).pushNamed(AppRoutes.getUserInfo, arguments: viewModel.email);
     } else {
       await showTopModalSheet<String>(
           context: context,

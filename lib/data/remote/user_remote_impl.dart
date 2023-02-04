@@ -1,3 +1,5 @@
+import 'package:Smartpay/data/core/network/NetworkService.dart';
+import 'package:Smartpay/data/core/network/urlPath.dart';
 import 'package:Smartpay/data/core/network_config.dart';
 import 'package:Smartpay/data/remote/user_remote.dart';
 import 'package:Smartpay/domain/model/get_email_token.dart';
@@ -52,7 +54,6 @@ class UserRemoteImpl extends UserRemote {
       final responseData = HomeResponse.fromJson(response.data).data;
       return responseData?.secret;
     } catch (error) {
-      print("get user error: ${error}");
       handleError(error);
     }
   }
@@ -68,10 +69,22 @@ class UserRemoteImpl extends UserRemote {
       sharedPreference.saveToken(data.token!);
       return responseData;
     } catch (error) {
-      print("error: $error");
       handleError(error);
     }
   }
+
+  // @override
+  // Future<RegisterUserResponse?> signup(RegisterData entity) async {
+  //   try {
+  //     final response = await request(
+  //         path: UrlPath.signup,
+  //         method: RequestMethod.post,
+  //         data: entity.toMap());
+  //     return RegisterUserResponse.fromJson(response.data);
+  //   } catch (_) {
+  //     rethrow;
+  //   }
+  // }
 
   @override
   Future<RegisterUserResponse?> register(String fullName, String userName,
@@ -81,12 +94,15 @@ class UserRemoteImpl extends UserRemote {
         'country': country, 'password': password, 'device_name': "mobile"};
       var response =
           await dioClient.post("${NetworkConfig.BASE_URL}/auth/register", data: _data);
+      print("show response:::: ${response.data}");
       final responseData = RegisterUserResponse.fromJson(response.data);
-      final data = RegisterData.fromJson(responseData.data);
-      sharedPreference.saveToken(data.token!);
+
+
+
+      //final data = RegisterData.fromJson(responseData.data);
+      //sharedPreference.saveToken(data.token!);
       return responseData;
     } catch (error) {
-      print("error: $error");
       handleError(error);
     }
   }
@@ -100,7 +116,6 @@ class UserRemoteImpl extends UserRemote {
       final responseData = VerifyEmailTokenResponse.fromJson(response.data).data;
       return responseData?.email;
     } catch (error) {
-      print("error: $error");
       handleError(error);
     }
   }
