@@ -120,7 +120,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                               ))
                             : AppButton(
                                 onPressed: () {
-                                  observeSignInState(context);
+                                  observeGetEmailTokenState(context);
                                 },
                                 title: AppStrings.signUp,
                                 enabled: isValidGetEmailToken ? true : false),
@@ -221,7 +221,7 @@ class _SignUpScreen extends State<SignUpScreen> {
     );
   }
 
-  void observeSignInState(BuildContext context) async {
+  void observeGetEmailTokenState(BuildContext context) async {
     final viewModel = context.read(getEmailTokenProvider);
     print('email ${viewModel.email}');
     var mail = await viewModel.getEmailToken(viewModel.email);

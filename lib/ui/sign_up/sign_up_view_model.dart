@@ -3,6 +3,7 @@ import 'package:Smartpay/data/repository/user_repository.dart';
 import 'package:Smartpay/routes/locator.dart';
 import 'package:Smartpay/ui/base_view_model.dart';
 import 'package:Smartpay/ui/components/toast.dart';
+import 'package:Smartpay/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 
 class SignUpViewModel extends BaseViewModel {
@@ -15,7 +16,6 @@ class SignUpViewModel extends BaseViewModel {
   ViewState get viewState => _state;
   String errorMessage = "";
   String email = "";
-  String? password;
   bool isValidEmail = false;
 
   void setViewState(ViewState state) {
@@ -58,6 +58,7 @@ class SignUpViewModel extends BaseViewModel {
       setViewState(ViewState.loading);
       var response = await userRepository.getEmailToken(email);
       setViewState(ViewState.success);
+      sharedPreference.saveEmail(email);
       print("Showing email token response::: $response");
       return response;
     } catch (error) {
