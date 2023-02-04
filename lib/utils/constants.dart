@@ -21,6 +21,7 @@ class AppStrings {
   static String yourself = "yourself";
   static String fullName = "Full name";
   static String userName = "Username";
+  static String getStarted = "Get Started";
   static String country = "Select Country";
   static String setYourPinCode = "Set your PIN code";
   static String forgotPassword = "Forgot Password?";
@@ -32,6 +33,8 @@ class AppStrings {
   static String heyThereTellUs = "Hey there! tell us a bit \nabout ";
   static String weUseStateOfTheArt = "We use state-of-the-art security measures "
       "to protect your information at all times";
+  static String youHaveCompleted = "You’ve completed the onboarding,\nyou can "
+      "start using";
 
 }
 
@@ -67,7 +70,7 @@ class AppImages {
   static const String singaporeIcon = "assets/images/ic_singapore.svg";
   static const String ukIcon = "assets/images/ic_uk.svg";
   static const String icCheck = "assets/images/ic_check.svg";
-
+  static const String thumbsUp = "assets/images/ic_thumbs_up.png";
 }
 
 class AppFontSizes {
