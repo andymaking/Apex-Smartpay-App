@@ -31,6 +31,8 @@ class _EmailVerificationState extends State<EmailVerification> {
 
   @override
   Widget build(BuildContext context) {
+    final email = ModalRoute.of(context)!.settings.arguments as String;
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: BaseView<EmailVerificationViewModel>(
@@ -51,7 +53,8 @@ class _EmailVerificationState extends State<EmailVerification> {
                               const SizedBox(
                                 height: 12,
                               ),
-                              AppTextView.getAppTextView(AppStrings.weSentACode,
+                              AppTextView.getAppTextView("We send a code to ( $email ). "
+                                  "Enter it here to verify your identity",
                                   textAlign: TextAlign.left,
                                   weight: FontWeight.w500),
                               const SizedBox(
