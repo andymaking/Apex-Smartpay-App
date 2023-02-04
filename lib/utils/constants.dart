@@ -16,11 +16,13 @@ class AppStrings {
   static String signUp = "Sign Up";
   static String signIn = "Sign In";
   static String createA = "Create a ";
+  static String createPin = "Create PIN";
   static String account = "account";
   static String yourself = "yourself";
   static String fullName = "Full name";
   static String userName = "Username";
   static String country = "Select Country";
+  static String setYourPinCode = "Set your PIN code";
   static String forgotPassword = "Forgot Password?";
   static String dontHaveAnAccount = "Don’t have an account? ";
   static String alreadyHaveAnAccount = "Already have an account? ";
@@ -28,6 +30,8 @@ class AppStrings {
   static String weSentACode = "We send a code to ( %s ). "
       "Enter it here to verify your identity";
   static String heyThereTellUs = "Hey there! tell us a bit \nabout ";
+  static String weUseStateOfTheArt = "We use state-of-the-art security measures "
+      "to protect your information at all times";
 
 }
 

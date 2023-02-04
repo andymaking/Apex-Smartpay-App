@@ -74,11 +74,6 @@ class GetUserInfoViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  bool get hasInput {
-    return fullName != null && userName != null &&
-        country != null && password != null;
-  }
-
   void setSelectedCountry(name) {
     this.selectedCountryName = name;
     notifyListeners();
@@ -111,16 +106,16 @@ class GetUserInfoViewModel extends BaseViewModel {
 
   showError() {
     String errorMessage = "";
-    if (fullName == null || fullName!.isEmpty) {
+    if (fullName == null || fullName.isEmpty) {
       errorMessage = "${errorMessage}Please Enter your Full Name,  ";
     }
-    if (userName == null || userName!.isEmpty) {
+    if (userName == null || userName.isEmpty) {
       errorMessage = "${errorMessage}Please Enter your User Name,  ";
     }
-    if (country == null || country!.isEmpty) {
+    if (country == null || country.isEmpty) {
       errorMessage = "${errorMessage}Please select your Country,  ";
     }
-    if (password == null || password!.isEmpty) {
+    if (password == null || password.isEmpty) {
       errorMessage = "${errorMessage}Please Enter your Password,  ";
     }
     showCustomToast(errorMessage);
