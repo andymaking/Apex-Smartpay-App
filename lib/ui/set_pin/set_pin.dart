@@ -122,7 +122,7 @@ class _SetPinScreenState extends State<SetUserPinScreen> {
                         onCompleted: (v) {},
                         onChanged: (value) {
                           model.setPin(value);
-                          model.validUserInfo();
+                          model.validUserPin();
                           print(value);
                         },
                         beforeTextPaste: (text) {

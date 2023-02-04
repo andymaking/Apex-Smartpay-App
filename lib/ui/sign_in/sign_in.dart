@@ -1,3 +1,5 @@
+import 'package:Smartpay/data/core/enum/view_state.dart';
+import 'package:Smartpay/routes/locator.dart';
 import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/theme/theme_config.dart';
 import 'package:Smartpay/ui/base_ui.dart';
@@ -8,9 +10,30 @@ import 'package:Smartpay/ui/sign_in/sign_in_view_model.dart';
 import 'package:Smartpay/utils/app_text.dart';
 import 'package:Smartpay/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../components/social_auth_button.dart';
 
-class SignInScreen extends StatefulWidget {
+final signInProvider = ChangeNotifierProvider.autoDispose(
+        (ref) => getIt.get<SignInViewModel>());
+
+final _validSignInProviderProvider = Provider.autoDispose<bool>((ref) {
+  return ref.watch(signInProvider).isValidSignIn;
+});
+
+final validSignInProvider = Provider.autoDispose<bool>((ref) {
+  return ref.watch(_validSignInProviderProvider);
+});
+
+final _signInStateProvider = Provider.autoDispose<ViewState>((ref) {
+  return ref.watch(signInProvider).viewState;
+});
+
+final signInStateProvider = Provider.autoDispose<ViewState>((ref) {
+  return ref.watch(_signInStateProvider);
+});
+
+class SignInScreen extends StatefulHookWidget {
   const SignInScreen({super.key});
 
   @override
@@ -28,13 +51,13 @@ class _LoginScreen extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isValidUserInfo = useProvider(validSignInProvider);
+    final userInfoViewState = useProvider(signInStateProvider);
+    final model = context.read(signInProvider);
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        body: BaseView<SignInViewModel>(
-          onModelReady: (model) {
-            model.getValues();
-          },
-          builder: (context, model, child) => SafeArea(
+        body: SafeArea(
             child: FocusScope(
               node: _node,
               child: Form(
@@ -60,7 +83,10 @@ class _LoginScreen extends State<SignInScreen> {
                             ),
                             AppTextField(
                               hint: AppStrings.email,
-                              onChanged: (v) => model.setEmail(v),
+                              onChanged: (v) {
+                                model.setEmail(v);
+                                model.validSignIn();
+                              },
                               controller: model.emailController,
                               keyboardType: TextInputType.emailAddress,
                             ),
@@ -71,6 +97,7 @@ class _LoginScreen extends State<SignInScreen> {
                               hint: AppStrings.password,
                               onChanged: (val) {
                                 model.setPassword(val);
+                                model.validSignIn();
                               },
                               controller: model.passwordController,
                             ),
@@ -90,12 +117,17 @@ class _LoginScreen extends State<SignInScreen> {
                             const SizedBox(
                               height: 24,
                             ),
-                            AppButton(
+                            userInfoViewState== ViewState.loading
+                                ? Center(
+                                child: CircularProgressIndicator(
+                                  color: ThemeConfig.darkAccent,
+                                ))
+                                : AppButton(
                                 onPressed: () {
-                                  Navigator.of(context).pushNamed(AppRoutes.home);
+                                  observeLoginState(context);
                                 },
                                 title: AppStrings.signIn,
-                                enabled: true),
+                                enabled: isValidUserInfo ? true : false),
                             const SizedBox(
                               height: 32,
                             ),
@@ -155,7 +187,6 @@ class _LoginScreen extends State<SignInScreen> {
                       const SizedBox(
                         height: 124,
                       ),
-
                     ],
                   ),
                   Padding(
@@ -194,7 +225,22 @@ class _LoginScreen extends State<SignInScreen> {
               ),
             ),
           ),
-        ));
+        );
+  }
+
+  void observeLoginState(BuildContext context) async {
+    final viewModel = context.read(signInProvider);
+    print('email ${viewModel.email}');
+    print('password ${viewModel.password}');
+    var mail = await viewModel.signIn(
+        viewModel.email,
+        viewModel.password,
+        context
+    );
+    if (viewModel.viewState == ViewState.success) {
+      print('register user details $mail');
+      Navigator.of(context).pushNamed(AppRoutes.home);
+    }
   }
 
   @override

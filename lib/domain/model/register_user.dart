@@ -4,7 +4,8 @@ class RegisterUserResponse {
   String? message;
   RegisterData? data;
 
-  RegisterUserResponse({this.status,
+  RegisterUserResponse({
+    this.status,
     this.message,
     this.data,});
 

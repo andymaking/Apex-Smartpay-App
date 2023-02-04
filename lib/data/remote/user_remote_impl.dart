@@ -1,6 +1,7 @@
 import 'package:Smartpay/data/core/network/NetworkService.dart';
 import 'package:Smartpay/data/core/network/urlPath.dart';
 import 'package:Smartpay/data/core/network_config.dart';
+import 'package:Smartpay/data/core/table_constants.dart';
 import 'package:Smartpay/data/remote/user_remote.dart';
 import 'package:Smartpay/domain/model/get_email_token.dart';
 import 'package:Smartpay/domain/model/home.dart';
@@ -63,28 +64,14 @@ class UserRemoteImpl extends UserRemote {
     try {
       var _data = { 'email': email, 'password': password, 'device_name': "mobile"};
       var response =
-          await dioClient.post("${NetworkConfig.BASE_URL}/auth/register", data: _data);
+          await dioClient.post("${NetworkConfig.BASE_URL}/auth/login", data: _data);
       final responseData = LoginUserResponse.fromJson(response.data);
-      final data = LoginData.fromJson(responseData.data);
-      sharedPreference.saveToken(data.token!);
+      storageService.storeItem(key: DbTable.TOKEN_TABLE_NAME, value: responseData.data?.token);
       return responseData;
     } catch (error) {
       handleError(error);
     }
   }
-
-  // @override
-  // Future<RegisterUserResponse?> signup(RegisterData entity) async {
-  //   try {
-  //     final response = await request(
-  //         path: UrlPath.signup,
-  //         method: RequestMethod.post,
-  //         data: entity.toMap());
-  //     return RegisterUserResponse.fromJson(response.data);
-  //   } catch (_) {
-  //     rethrow;
-  //   }
-  // }
 
   @override
   Future<RegisterUserResponse?> register(String fullName, String userName,
@@ -96,11 +83,7 @@ class UserRemoteImpl extends UserRemote {
           await dioClient.post("${NetworkConfig.BASE_URL}/auth/register", data: _data);
       print("show response:::: ${response.data}");
       final responseData = RegisterUserResponse.fromJson(response.data);
-
-
-
-      //final data = RegisterData.fromJson(responseData.data);
-      //sharedPreference.saveToken(data.token!);
+      storageService.storeItem(key: DbTable.TOKEN_TABLE_NAME, value: responseData.data?.token);
       return responseData;
     } catch (error) {
       handleError(error);
