@@ -51,9 +51,11 @@ class _SignUpScreen extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //final email = ModalRoute.of(context)!.settings.arguments as String;
     final isValidGetEmailToken = useProvider(validedEmailTokenProvider);
     final getEmailTokenViewState = useProvider(getEmailTokenStateProvider);
     final model = context.read(getEmailTokenProvider);
+    //model.email = email;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

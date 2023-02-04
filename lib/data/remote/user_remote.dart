@@ -30,7 +30,10 @@ abstract class UserRemote {
 }
 
 void handleError(dynamic error) {
+  print("print errror.runtime :${error.runtimeType}");
+  print("print errror.runtime :${error?.response == null}");
   var errorString = error.response.toString();
+
   if (error is DioError) {
     final errorMessage = DioExceptions.fromDioError(error).toString();
     throw errorMessage;
