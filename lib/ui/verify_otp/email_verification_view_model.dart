@@ -1,49 +1,53 @@
 import 'package:Smartpay/data/core/enum/view_state.dart';
+import 'package:Smartpay/data/repository/user_repository.dart';
+import 'package:Smartpay/routes/locator.dart';
 import 'package:Smartpay/ui/base_view_model.dart';
 import 'package:Smartpay/ui/components/toast.dart';
 import 'package:flutter/material.dart';
 
 class EmailVerificationViewModel extends BaseViewModel {
+  final userRepository = getIt<UserRepository>();
   TextEditingController otpController = TextEditingController();
 
-  String? otp;
+  ViewState _state = ViewState.idle;
+  @override
+  ViewState get viewState => _state;
+  String errorMessage = "";
+  bool isValidToken = false;
+  String token = "";
+  String email = "";
 
-  setEmail(String otp) {
-    otp = otp;
+  void setViewState(ViewState state) {
+    _state = state;
     notifyListeners();
   }
 
-  setOtp(String otp) {
-    otp = otp;
+  setToken(String s) {
+    token = s;
     notifyListeners();
   }
 
-  void getValues() {
-    otpController.text = otp ?? "";
+  void validateOtpInput() {
+    isValidToken = token.length == 5;
+    notifyListeners();
   }
 
-  bool get hasInput {
-    return otp != null && otp?.length == 5;
+  void setError(String error) {
+    errorMessage = error;
+    notifyListeners();
   }
 
-  showError() {
-    String errorMessage = "";
-    if (otp == null || otp!.isEmpty) {
-      errorMessage = "${errorMessage}Please Enter the code sent to your email,  ";
-    }
-    showCustomToast(errorMessage);
-  }
-
-  confirmOtp() async {
-    viewState = ViewState.idle;
+  Future<String?> verifyEmailToken(String email, String token) async {
     try {
-      //TODO
-    } catch (e) {
-      viewState = ViewState.idle;
-
-      showCustomToast(e.toString());
+      setViewState(ViewState.loading);
+      var response = await userRepository.verifyEmailToken(email, token);
+      setViewState(ViewState.success);
+      print("Showing otp response::: $response");
+      return response;
+    } catch (error) {
+      setViewState(ViewState.error);
+      setError(error.toString());
     }
-    notifyListeners();
   }
 
 

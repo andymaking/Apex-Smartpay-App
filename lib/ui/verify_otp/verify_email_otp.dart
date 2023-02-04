@@ -1,8 +1,12 @@
 import 'package:Smartpay/data/core/enum/view_state.dart';
+import 'package:Smartpay/routes/locator.dart';
 import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/theme/theme_config.dart';
 import 'package:Smartpay/ui/components/button.dart';
+import 'package:Smartpay/ui/components/custom_dialog.dart';
 import 'package:Smartpay/utils/otp_timer_utils.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:Smartpay/ui/base_ui.dart';
 import 'package:Smartpay/ui/components/app_toolbar.dart';
@@ -11,7 +15,25 @@ import 'package:Smartpay/utils/app_text.dart';
 import 'package:Smartpay/utils/constants.dart';
 import 'package:flutter/material.dart';
 
-class EmailVerification extends StatefulWidget {
+final verifyTokenProvider =
+ChangeNotifierProvider.autoDispose((ref) => getIt.get<EmailVerificationViewModel>());
+
+final _validedVerifyTokenProviderr = Provider.autoDispose<bool>((ref) {
+  return ref.watch(verifyTokenProvider).isValidToken;
+});
+
+final validVerifyTokenProviderr = Provider.autoDispose<bool>((ref) {
+  return ref.watch(_validedVerifyTokenProviderr);
+});
+
+final _verifyTokenStateProvider = Provider.autoDispose<ViewState>((ref) {
+  return ref.watch(verifyTokenProvider).viewState;
+});
+
+final verifyTokenStateProvider = Provider.autoDispose<ViewState>((ref) {
+  return ref.watch(_verifyTokenStateProvider);
+});
+class EmailVerification extends StatefulHookWidget {
   final String accountType;
 
   const EmailVerification({Key? key, this.accountType = "Customer"})
@@ -32,11 +54,14 @@ class _EmailVerificationState extends State<EmailVerification> {
   @override
   Widget build(BuildContext context) {
     final email = ModalRoute.of(context)!.settings.arguments as String;
+    final isValidVerifyToken = useProvider(validVerifyTokenProviderr);
+    final verifyTokenViewState = useProvider(verifyTokenStateProvider);
+    final model = context.read(verifyTokenProvider);
+    model.email = email;
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        body: BaseView<EmailVerificationViewModel>(
-            builder: (context, model, child) => SafeArea(
+        body: SafeArea(
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,7 +127,8 @@ class _EmailVerificationState extends State<EmailVerification> {
                                 keyboardType: TextInputType.number,
                                 onCompleted: (v) {},
                                 onChanged: (value) {
-                                  model.setOtp(value);
+                                  model.setToken(value);
+                                  model.validateOtpInput();
                                   print(value);
                                 },
                                 beforeTextPaste: (text) {
@@ -143,8 +169,10 @@ class _EmailVerificationState extends State<EmailVerification> {
                                   ),
                                 ),
                               if (model.viewState == ViewState.loading)
-                                const Center(
-                                  child: CircularProgressIndicator(),
+                                 Center(
+                                  child: CircularProgressIndicator(
+                                    color: ThemeConfig.darkAccent,
+                                  ),
                                 )
                             ],
                           ),
@@ -155,7 +183,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                         Sized24Container(
                           child: AppButton(
                               onPressed: () {
-                                Navigator.of(context).pushNamed(AppRoutes.getUserInfo);
+                                observeVerifyTokenState(context);
                               },
                               title: AppStrings.confirm,
                               enabled: model.otpController.text.length == 5
@@ -165,6 +193,26 @@ class _EmailVerificationState extends State<EmailVerification> {
                       ],
                     ),
                   ),
-                )));
+                ));
   }
+
+  void observeVerifyTokenState(BuildContext context) async {
+    final viewModel = context.read(verifyTokenProvider);
+    print('token ${viewModel.token}');
+    print('email ${viewModel.email}');
+    var mail = await viewModel.verifyEmailToken(viewModel.email, viewModel.token);
+    if (viewModel.viewState == ViewState.success) {
+      print('email token details $mail');
+      Navigator.of(context).pushNamed(AppRoutes.getUserInfo);
+    } else {
+      await showTopModalSheet<String>(
+          context: context,
+          child: ShowDialog(
+            title: viewModel.errorMessage,
+            isError: true,
+            onPressed: () {},
+          ));
+    }
+  }
+
 }
