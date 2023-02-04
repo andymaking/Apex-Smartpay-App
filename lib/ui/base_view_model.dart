@@ -1,7 +1,7 @@
-import 'package:Smartpay/core/enum/view_state.dart';
+import 'package:Smartpay/data/core/enum/view_state.dart';
+import 'package:Smartpay/data/services/navigation_service.dart';
 import 'package:Smartpay/routes/locator.dart';
 import 'package:flutter/foundation.dart';
-import '../core/services/navigation_service.dart';
 
 class BaseViewModel extends ChangeNotifier {
   ViewState _viewState = ViewState.idle;

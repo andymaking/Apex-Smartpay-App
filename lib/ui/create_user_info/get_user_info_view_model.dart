@@ -1,13 +1,10 @@
-import 'package:Smartpay/core/enum/view_state.dart';
+import 'package:Smartpay/data/core/enum/view_state.dart';
 import 'package:Smartpay/domain/model/country_model.dart';
-import 'package:Smartpay/routes/locator.dart';
 import 'package:Smartpay/ui/base_view_model.dart';
 import 'package:Smartpay/ui/components/toast.dart';
 import 'package:flutter/cupertino.dart';
-import '../../../core/services/storage-service.dart';
 
 class GetUserInfoViewModel extends BaseViewModel {
-  StorageService storageService = getIt<StorageService>();
   List<CountryModel> userGenders = [];
   Set<String> currentUserCountry = {};
   String selectedCountryName = "";

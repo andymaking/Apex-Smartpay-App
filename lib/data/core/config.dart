@@ -1,4 +1,4 @@
-import 'package:Smartpay/core/network_config.dart';
+import 'package:Smartpay/data/core/network_config.dart';
 
 enum Flavor {
   DEVELOPMENT,

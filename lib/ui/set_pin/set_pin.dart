@@ -1,5 +1,6 @@
-import 'package:Smartpay/core/enum/view_state.dart';
+import 'package:Smartpay/data/core/enum/view_state.dart';
 import 'package:Smartpay/routes/locator.dart';
+import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/theme/theme_config.dart';
 import 'package:Smartpay/ui/components/app_toolbar.dart';
 import 'package:Smartpay/ui/components/button.dart';
@@ -159,7 +160,7 @@ class _SetPinScreenState extends State<SetUserPinScreen> {
                 Sized24Container(
                   child: AppButton(
                       onPressed: () {
-                        //TODO
+                        Navigator.of(context).pushNamed(AppRoutes.congrats);
                       },
                       title: AppStrings.createPin,
                       enabled: isValidUserPin

@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:Smartpay/core/enum/view_state.dart';
+import 'package:Smartpay/data/core/enum/view_state.dart';
 import 'package:Smartpay/routes/locator.dart';
 import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/theme/theme_config.dart';

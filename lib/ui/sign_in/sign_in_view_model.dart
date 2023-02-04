@@ -1,12 +1,9 @@
-import 'package:Smartpay/core/enum/view_state.dart';
-import 'package:Smartpay/routes/locator.dart';
+import 'package:Smartpay/data/core/enum/view_state.dart';
 import 'package:Smartpay/ui/base_view_model.dart';
 import 'package:Smartpay/ui/components/toast.dart';
 import 'package:flutter/cupertino.dart';
-import '../../../core/services/storage-service.dart';
 
 class SignInViewModel extends BaseViewModel {
-  StorageService storageService = getIt<StorageService>();
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();

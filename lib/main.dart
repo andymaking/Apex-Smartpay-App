@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:Smartpay/data/services/navigation_service.dart';
 import 'package:Smartpay/routes/locator.dart';
 import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/ui/splash_screen/splash_screen.dart';
@@ -8,10 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:oktoast/oktoast.dart';
-import 'core/services/navigation_service.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
   //setup dependency injector
   dependenciesInjectorSetup();
   runZonedGuarded(() {
