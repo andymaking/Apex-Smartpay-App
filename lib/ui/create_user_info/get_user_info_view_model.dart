@@ -1,15 +1,20 @@
 import 'package:Smartpay/data/core/enum/view_state.dart';
+import 'package:Smartpay/data/core/table_constants.dart';
 import 'package:Smartpay/data/repository/user_repository.dart';
+import 'package:Smartpay/data/services/storage-service.dart';
 import 'package:Smartpay/domain/model/country_model.dart';
 import 'package:Smartpay/domain/model/register_user.dart';
 import 'package:Smartpay/routes/locator.dart';
 import 'package:Smartpay/ui/base_view_model.dart';
 import 'package:Smartpay/ui/components/custom_dialog.dart';
 import 'package:Smartpay/ui/components/toast.dart';
+import 'package:Smartpay/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 
 class GetUserInfoViewModel extends BaseViewModel {
   final userRepository = getIt<UserRepository>();
+  //final store = getIt<StorageService>();
+
   List<CountryModel> userCountry = [];
   Set<String> currentUserCountry = {};
   String selectedCountryName = "";
@@ -65,8 +70,6 @@ class GetUserInfoViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-
-
   void validUserInfo() {
     isValidUserInfo = fullName.isNotEmpty && userName.isNotEmpty &&
         selectedCountryCode.isNotEmpty && isValidPassword() && isValidPasswordPattern();
@@ -114,30 +117,15 @@ class GetUserInfoViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
-  showError() {
-    String errorMessage = "";
-    if (fullName == null || fullName.isEmpty) {
-      errorMessage = "${errorMessage}Please Enter your Full Name,  ";
-    }
-    if (userName == null || userName.isEmpty) {
-      errorMessage = "${errorMessage}Please Enter your User Name,  ";
-    }
-    if (country == null || country.isEmpty) {
-      errorMessage = "${errorMessage}Please select your Country,  ";
-    }
-    if (password == null || password.isEmpty) {
-      errorMessage = "${errorMessage}Please Enter your Password,  ";
-    }
-    showCustomToast(errorMessage);
-  }
 
   Future<RegisterUserResponse?> registerUser(String fullName, String userName,
       String email, String country, String password, BuildContext context) async {
     try {
       setViewState(ViewState.loading);
       var response = await userRepository.register(fullName, userName, email, country, password);
+      storageService.storeItem(key: DbTable.EMAIL_TABLE_NAME, value: email);
+      storageService.storeItem(key: DbTable.PASSWORD_TABLE_NAME, value: email);
       setViewState(ViewState.success);
-      //token = "${response?.data?.token!}";
       print("Showing register response::: $response");
       return response;
     } catch (error) {

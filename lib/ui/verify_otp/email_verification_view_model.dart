@@ -1,5 +1,6 @@
 import 'package:Smartpay/data/core/enum/view_state.dart';
 import 'package:Smartpay/data/repository/user_repository.dart';
+import 'package:Smartpay/data/services/storage-service.dart';
 import 'package:Smartpay/routes/locator.dart';
 import 'package:Smartpay/ui/base_view_model.dart';
 import 'package:Smartpay/ui/components/toast.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 
 class EmailVerificationViewModel extends BaseViewModel {
   final userRepository = getIt<UserRepository>();
+  final store = getIt<StorageService>();
   TextEditingController otpController = TextEditingController();
 
   ViewState _state = ViewState.idle;

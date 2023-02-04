@@ -1,3 +1,4 @@
+import 'package:Smartpay/data/core/table_constants.dart';
 import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/theme/theme_config.dart';
 import 'package:Smartpay/utils/constants.dart';
@@ -25,6 +26,7 @@ class _SplashScreenState extends State<SplashScreen>
       ..forward()
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
+          storageService.storeItem(key: DbTable.APP_FIRST_TIME_TABLE_NAME, value: "true");
           Navigator.of(context).pushReplacementNamed(AppRoutes.signIn);
         }
       });

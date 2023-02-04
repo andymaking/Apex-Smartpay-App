@@ -1,54 +1,38 @@
-
 class LoginUserResponse {
   bool? status;
   String? message;
   LoginData? data;
 
-  LoginUserResponse({
-    this.status,
-    this.message,
-    this.data
-  });
+  LoginUserResponse({this.status, this.message, this.data});
 
-  LoginUserResponse.fromJson(dynamic json) {
-    status = json['status'];
-    message = json['message'];
-    data = json['data'] != null ? LoginData.fromJson(json['data']) : null;
+  factory LoginUserResponse.fromJson(Map<String, dynamic> json) {
+    return LoginUserResponse(
+        status: json['status'] as bool?,
+        message: json['message'] as String?,
+        data: LoginData.fromJson(json['data']));
   }
 
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map['status'] = status;
-    map['message'] = message;
-    if (data != null) {
-      map['data'] = data?.toJson();
-    }
-    return map;
-  }
-
+  Map<String, dynamic> toJson() =>
+      {'status': status, 'message': message, 'data': data?.toJson()};
 }
 
 class LoginData {
   LoginUserData? user;
   String? token;
 
-  LoginData({
-    this.user,
-    this.token,
-  });
+  LoginData({this.user, this.token,});
 
-  LoginData.fromJson(dynamic json) {
-    user = json['user'];
-    token = json['token'];
+  factory LoginData.fromJson(Map<String, dynamic> json) {
+    return LoginData(
+      user: LoginUserData.fromJson(json['user']),
+      token: json['token'] as String?,
+    );
   }
 
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map['user'] = user;
-    map['token'] = token;
-    return map;
-  }
-
+  Map<String, dynamic> toJson() => {
+    'user': user?.toJson(),
+    'token': token,
+  };
 }
 
 class LoginUserData {
@@ -61,7 +45,6 @@ class LoginUserData {
   String? country;
   String? avatar;
 
-
   LoginUserData({
     this.id,
     this.fullName,
@@ -71,33 +54,27 @@ class LoginUserData {
     this.phoneCountry,
     this.country,
     this.avatar,
-
   });
 
-  LoginUserData.fromJson(dynamic json) {
-    id = json['id'];
-    fullName = json['full_name'];
-    userName = json['username'];
-    email = json['email'];
-    phone = json['phone'];
-    phoneCountry = json['phoneCountry'];
-    country = json['country'];
-    avatar = json['avatar'];
+  factory LoginUserData.fromJson(Map<String, dynamic> json) {
+    return LoginUserData(
+      id: json['id'] as String?,
+      fullName: json['full_name'] as String?,
+      userName: json['username'] as String?,
+      email: json['email'] as String?,
+      phone: json['phone'] as String?,
+      phoneCountry: json['phone_country'] as String?,
+      country: json['country'] as String?,
+      avatar: json['avatar'] as String?,
 
-  }
+    );}
 
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map['id'] = id;
-    map['full_name'] = fullName;
-    map['username'] = userName;
-    map['email'] = email;
-    map['phone'] = phone;
-    map['phone_country'] = phoneCountry;
-    map['country'] = country;
-    map['avatar'] = avatar;
-
-    return map;
-  }
+  Map<String, dynamic> toJson() => {
+    'full_name': fullName,
+    'userName': userName,
+    'email': email,
+    'country': country,
+    'id': id,
+  };
 
 }
