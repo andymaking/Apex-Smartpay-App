@@ -2,7 +2,7 @@
 class GetEmailTokenResponse {
   bool? status;
   String? message;
-  SuccessMessageData? data;
+  GetEmailTokenData? data;
 
   GetEmailTokenResponse({
     this.status,
@@ -13,38 +13,35 @@ class GetEmailTokenResponse {
   GetEmailTokenResponse.fromJson(dynamic json) {
     status = json['status'];
     message = json['message'];
+    data = json['data'] != null ? GetEmailTokenData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
+    map['status'] = status;
     map['message'] = message;
+    if (data != null) {
+      map['data'] = data?.toJson();
+    }
     return map;
   }
 
 }
 
-class SuccessMessageData {
-  double? amount;
-  double? amountPerAddress;
-  bool? claimed;
+class GetEmailTokenData {
+  String? token;
 
-  SuccessMessageData({
-    this.amount,
-    this.amountPerAddress,
-    this.claimed,
+  GetEmailTokenData({
+    this.token,
   });
 
-  SuccessMessageData.fromJson(dynamic json) {
-    amount = json['amount'];
-    amountPerAddress = json['amount_per_address'];
-    claimed = json['claimed'];
+  GetEmailTokenData.fromJson(dynamic json) {
+    token = json['token'];
   }
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
-    map['amount'] = amount;
-    map['amount_per_address'] = amountPerAddress;
-    map['claimed'] = claimed;
+    map['token'] = token;
     return map;
   }
 

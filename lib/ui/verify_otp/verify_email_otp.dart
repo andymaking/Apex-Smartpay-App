@@ -1,4 +1,4 @@
-import 'package:Smartpay/core/enum/view_state.dart';
+import 'package:Smartpay/data/core/enum/view_state.dart';
 import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/theme/theme_config.dart';
 import 'package:Smartpay/ui/components/button.dart';

@@ -92,7 +92,7 @@ class _LoginScreen extends State<SignInScreen> {
                             ),
                             AppButton(
                                 onPressed: () {
-                                  //TODO
+                                  Navigator.of(context).pushNamed(AppRoutes.home);
                                 },
                                 title: AppStrings.signIn,
                                 enabled: true),

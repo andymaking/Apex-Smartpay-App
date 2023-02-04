@@ -1,6 +1,6 @@
-import 'package:Smartpay/core/network_config.dart';
-import 'package:Smartpay/core/services/navigation_service.dart';
-import 'package:Smartpay/core/services/storage-service.dart';
+import 'package:Smartpay/data/core/network_config.dart';
+import 'package:Smartpay/data/services/navigation_service.dart';
+import 'package:Smartpay/data/services/storage-service.dart';
 import 'package:Smartpay/ui/create_user_info/get_user_info_view_model.dart';
 import 'package:Smartpay/ui/set_pin/set_pin_view_model.dart';
 import 'package:Smartpay/ui/sign_in/sign_in_view_model.dart';
@@ -15,7 +15,7 @@ GetIt getIt = GetIt.I;
 
 dependenciesInjectorSetup() {
   //initialize WidgetsFlutterBinding
-
+  WidgetsFlutterBinding.ensureInitialized();
   //Interceptors configuration
   getIt.registerFactory(() {
     Dio dio = Dio();
