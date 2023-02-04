@@ -1,19 +1,25 @@
+import 'dart:async';
+
 import 'package:Smartpay/routes/locator.dart';
 import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/ui/splash_screen/splash_screen.dart';
 import 'package:Smartpay/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:oktoast/oktoast.dart';
 import 'core/services/navigation_service.dart';
-import 'core/services/storage-service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //setup dependency injector
   dependenciesInjectorSetup();
-  StorageService storageService = getIt<StorageService>();
-  runApp(const MyApp());
+  runZonedGuarded(() {
+    runApp(const ProviderScope(child: MyApp()));
+  }, (dynamic error, dynamic stack) {
+    print(error);
+    print(stack);
+  });
 }
 
 class MyApp extends StatelessWidget {

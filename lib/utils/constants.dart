@@ -1,3 +1,4 @@
+import 'package:Smartpay/domain/model/country_model.dart';
 import 'package:flutter/material.dart';
 
 class AppStrings {
@@ -16,12 +17,17 @@ class AppStrings {
   static String signIn = "Sign In";
   static String createA = "Create a ";
   static String account = "account";
+  static String yourself = "yourself";
+  static String fullName = "Full name";
+  static String userName = "Username";
+  static String country = "Select Country";
   static String forgotPassword = "Forgot Password?";
   static String dontHaveAnAccount = "Don’t have an account? ";
   static String alreadyHaveAnAccount = "Already have an account? ";
   static String welcomeBack = "Welcome back, Sign in to your account";
   static String weSentACode = "We send a code to ( %s ). "
       "Enter it here to verify your identity";
+  static String heyThereTellUs = "Hey there! tell us a bit \nabout ";
 
 }
 
@@ -48,6 +54,16 @@ class AppImages {
   static const String or = "assets/images/ic_or.svg";
   static const String googleLogo = "assets/images/ic_google_logo.svg";
   static const String appleLogo = "assets/images/ic_apple_logo.svg";
+  static const String dropdownIcon = "assets/images/ic_drop_down.svg";
+  static const String searchIcon = "assets/images/ic_search.svg";
+  static const String usaIcon = "assets/images/ic_usa.svg";
+  static const String chinaIcon = "assets/images/ic_china.svg";
+  static const String indonesiaIcon = "assets/images/ic_indonesia.svg";
+  static const String netherLandIcon = "assets/images/ic_netherlands.svg";
+  static const String singaporeIcon = "assets/images/ic_singapore.svg";
+  static const String ukIcon = "assets/images/ic_uk.svg";
+  static const String icCheck = "assets/images/ic_check.svg";
+
 }
 
 class AppFontSizes {
@@ -60,4 +76,64 @@ class AppFontSizes {
   static double titleNormalSize14 = 14.0;
   static double textCaptionSize12 = 12.0;
   static double textCaptionSize10 = 10.0;
+}
+
+const String icUsaIcon = "assets/images/ic_usa.svg";
+const String icChinaIcon = "assets/images/ic_china.svg";
+const String icIndonesiaIcon = "assets/images/ic_indonesia.svg";
+const String icNetherLandIcon = "assets/images/ic_netherlands.svg";
+const String icSingaporeIcon = "assets/images/ic_singapore.svg";
+const String icUkIcon = "assets/images/ic_uk.svg";
+
+final dummyCountryFlagList = [icUsaIcon, icUkIcon, icSingaporeIcon, icChinaIcon,
+icNetherLandIcon, icIndonesiaIcon, icUsaIcon, icUkIcon, icSingaporeIcon, icChinaIcon,
+  icNetherLandIcon, icIndonesiaIcon,];
+
+final dummyCountryCodeList = ["US", "UK", "SG",
+  "CN", "NL", "ID", "US", "UK", "SG",
+  "CN", "NL", "ID", ];
+
+final dummyCountryNameList = ["United States", "United Kingdom", "Singapore",
+  "China", "Netherland", "Indonesia", "United States", "United Kingdom", "Singapore",
+  "China", "Netherland", "Indonesia",];
+
+class DemoCountryValues {
+  static final List<CountryModel> countries = [
+    const CountryModel(
+      id: "1",
+      countryName: "United States",
+      countryFlag: icUsaIcon,
+      countryCode: "US",
+    ),
+    const CountryModel(
+      id: "2",
+      countryName: "United Kingdom",
+      countryFlag: icUkIcon,
+      countryCode: "UK",
+    ),
+    const CountryModel(
+      id: "3",
+      countryName: "Singapore",
+      countryFlag: icSingaporeIcon,
+      countryCode: "SG",
+    ),
+    const CountryModel(
+      id: "4",
+      countryName: "China",
+      countryFlag: icChinaIcon,
+      countryCode: "CN",
+    ),
+    const CountryModel(
+      id: "5",
+      countryName: "Netherland",
+      countryFlag: icNetherLandIcon,
+      countryCode: "NL",
+    ),
+    const CountryModel(
+      id: "6",
+      countryName: "Indonesia",
+      countryFlag: icIndonesiaIcon,
+      countryCode: "ID",
+    ),
+  ];
 }

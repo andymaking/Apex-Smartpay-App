@@ -1,4 +1,5 @@
 import 'package:Smartpay/core/enum/view_state.dart';
+import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/theme/theme_config.dart';
 import 'package:Smartpay/ui/components/button.dart';
 import 'package:Smartpay/utils/otp_timer_utils.dart';
@@ -98,6 +99,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                                 keyboardType: TextInputType.number,
                                 onCompleted: (v) {},
                                 onChanged: (value) {
+                                  model.setOtp(value);
                                   print(value);
                                 },
                                 beforeTextPaste: (text) {
@@ -150,7 +152,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                         Sized24Container(
                           child: AppButton(
                               onPressed: () {
-                                //TODO
+                                Navigator.of(context).pushNamed(AppRoutes.getUserInfo);
                               },
                               title: AppStrings.confirm,
                               enabled: model.otpController.text.length == 5
