@@ -36,7 +36,9 @@ class AppButton extends StatelessWidget {
                 title,
                 size: AppFontSizes.titleFontSize16,
                 color: ThemeConfig.lightPrimary,
-                weight: FontWeight.w700
+                weight: FontWeight.w700,
+                height: 1.5,
+                letterSpacing: 0.3
             )
           ),
         ));

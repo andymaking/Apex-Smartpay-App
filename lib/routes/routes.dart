@@ -1,4 +1,5 @@
 import 'package:Smartpay/ui/components/route_error_page.dart';
+import 'package:Smartpay/ui/id/get_user_info.dart';
 import 'package:Smartpay/ui/sign_in/sign_in.dart';
 import 'package:Smartpay/ui/sign_up/sign_up.dart';
 import 'package:Smartpay/ui/verify_otp/verify_otp.dart';
@@ -11,6 +12,7 @@ class AppRoutes {
   static const signUp = '/signUp';
   static const onBoarding = '/onBoarding';
   static const verifyOtp = '/verifyOtp';
+  static const getUserInfo = '/id';
 }
 
 class AppRouter {
@@ -38,6 +40,12 @@ class AppRouter {
       case AppRoutes.verifyOtp:
         return MaterialPageRoute<dynamic>(
           builder: (_) => const EmailVerification(),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case AppRoutes.getUserInfo:
+        return MaterialPageRoute<dynamic>(
+          builder: (_) => const GetUserInfoScreen(),
           settings: settings,
           fullscreenDialog: true,
         );

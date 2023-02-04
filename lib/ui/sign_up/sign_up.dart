@@ -40,7 +40,7 @@ class _SignUpScreen extends State<SignUpScreen> {
               node: _node,
               child: Form(
                 key: _formKey,
-                child: ListView(children: <Widget>[
+                child: Stack(children: <Widget>[
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -153,40 +153,40 @@ class _SignUpScreen extends State<SignUpScreen> {
                       const SizedBox(
                         height: 124,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 4.0),
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.of(context)
-                                  .pushNamed(AppRoutes.signIn);
-                            },
-                            child: Container(
-                              alignment: Alignment.bottomCenter,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  AppTextView.getAppTextView(
-                                    AppStrings.dontHaveAnAccount,
-                                    color: ThemeConfig.greyColor,
-                                  ),
-                                  const SizedBox(
-                                    width: 2,
-                                  ),
-                                  AppTextView.getAppTextViewBold(
-                                      AppStrings.signIn,
-                                      color: ThemeConfig.darkAccent,
-                                      size: 16),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
                     ],
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 24.0),
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(AppRoutes.signIn);
+                        },
+                        child: Container(
+                          alignment: Alignment.bottomCenter,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              AppTextView.getAppTextView(
+                                AppStrings.dontHaveAnAccount,
+                                color: ThemeConfig.greyColor,
+                              ),
+                              const SizedBox(
+                                width: 2,
+                              ),
+                              AppTextView.getAppTextViewBold(
+                                  AppStrings.signIn,
+                                  color: ThemeConfig.darkAccent,
+                                  size: 16),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
                 ]),
               ),
             ),
