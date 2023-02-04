@@ -1,16 +1,10 @@
-import 'package:Smartpay/core/enum/view_state.dart';
-import 'package:Smartpay/routes/locator.dart';
-import 'package:Smartpay/theme/theme_config.dart';
-import 'package:Smartpay/ui/components/app_toolbar.dart';
+import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/ui/components/button.dart';
-import 'package:Smartpay/ui/set_pin/set_pin_view_model.dart';
 import 'package:Smartpay/utils/app_text.dart';
 import 'package:Smartpay/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:Smartpay/ui/set_pin/set_pin.dart' as sharedProvider;
 
 
@@ -67,7 +61,7 @@ class _CongratulationsState extends State<Congratulations> {
                       ),
                       AppButton(
                           onPressed: () {
-                            //TODO
+                            Navigator.pushNamed(context, AppRoutes.home);
                           },
                           title: AppStrings.getStarted,
                           enabled: true
