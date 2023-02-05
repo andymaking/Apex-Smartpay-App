@@ -1,9 +1,21 @@
+import 'package:Smartpay/data/core/enum/view_state.dart';
+import 'package:Smartpay/routes/locator.dart';
 import 'package:Smartpay/utils/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:Smartpay/ui/set_pin/set_pin.dart' as sharedProvider;
+import 'dashboard_view_model.dart';
 
+
+final dashboardProvider = ChangeNotifierProvider.autoDispose(
+        (ref) => getIt.get<DashBoardViewModel>());
+
+final _dashBaordStateProvider = Provider.autoDispose<ViewState>((ref) {
+  return ref.watch(dashboardProvider).viewState;
+});
+final dashBaordStateProvider = Provider.autoDispose<ViewState>((ref) {
+  return ref.watch(_dashBaordStateProvider);
+});
 
 class Dashboard extends StatefulHookWidget {
 
@@ -14,17 +26,28 @@ class Dashboard extends StatefulHookWidget {
   _DashboardState createState() => _DashboardState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _DashboardState extends State<Dashboard>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
 
   @override
-  void dispose() {
-    //_node.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    //_controller =
+    // AnimationController(vsync: this, duration: const Duration(seconds: 3))
+    //   ..forward()
+    //   ..addStatusListener((status) {
+    //     if (status == AnimationStatus.completed) {
+    //
+    //     }
+    //   });
+
+    context.read(dashboardProvider).getHomeMessage();
   }
 
   @override
   Widget build(BuildContext context) {
-    final user = useProvider(sharedProvider.setUserPinProvider);
+    final message = useProvider(dashboardProvider);
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -41,7 +64,7 @@ class _DashboardState extends State<Dashboard> {
                     height: 32,
                   ),
                   AppTextView.getAppTextViewBold(
-                      "Dashboard",
+                      message.message,
                   size: 16),
                   const SizedBox(
                     height: 12,

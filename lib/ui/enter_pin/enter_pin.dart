@@ -4,6 +4,7 @@ import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/theme/theme_config.dart';
 import 'package:Smartpay/ui/components/app_toolbar.dart';
 import 'package:Smartpay/ui/components/button.dart';
+import 'package:Smartpay/ui/components/custom_dialog.dart';
 import 'package:Smartpay/ui/set_pin/set_pin_view_model.dart';
 import 'package:Smartpay/utils/app_text.dart';
 import 'package:Smartpay/utils/constants.dart';
@@ -11,12 +12,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final setUserPinProvider = ChangeNotifierProvider.autoDispose(
         (ref) => getIt.get<SetUserPinViewModel>());
 
 final _validValidUserPinProvider = Provider.autoDispose<bool>((ref) {
-  return ref.watch(setUserPinProvider).isValidUserPin;
+  return ref.watch(setUserPinProvider).isValidUserInputPin;
 });
 
 final validValidUserPinProvider = Provider.autoDispose<bool>((ref) {
@@ -30,16 +32,17 @@ final _userPinStateProvider = Provider.autoDispose<ViewState>((ref) {
 final userPinStateProvider = Provider.autoDispose<ViewState>((ref) {
   return ref.watch(_userPinStateProvider);
 });
-class SetUserPinScreen extends StatefulHookWidget {
+class EnterPinScreen extends StatefulHookWidget {
 
-  const SetUserPinScreen( {Key? key,})
+  const EnterPinScreen( {Key? key,})
       : super(key: key);
 
   @override
-  _SetPinScreenState createState() => _SetPinScreenState();
+  _EnterPinScreenState createState() => _EnterPinScreenState();
 }
 
-class _SetPinScreenState extends State<SetUserPinScreen> {
+class _EnterPinScreenState extends State<EnterPinScreen> {
+
 
   @override
   void dispose() {
@@ -49,7 +52,7 @@ class _SetPinScreenState extends State<SetUserPinScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final token = ModalRoute.of(context)!.settings.arguments as String;
+    getUserPin();
     final isValidUserPin = useProvider(validValidUserPinProvider);
     final userPinViewState = useProvider(userPinStateProvider);
     final model = context.read(setUserPinProvider);
@@ -69,12 +72,15 @@ class _SetPinScreenState extends State<SetUserPinScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      AppTextView.getAppTextViewBold(
-                          AppStrings.setYourPinCode),
                       const SizedBox(
                         height: 12,
                       ),
-                      AppTextView.getAppTextView(AppStrings.weUseStateOfTheArt,
+                      AppTextView.getAppTextViewBold(
+                          "Welcome back!"),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      AppTextView.getAppTextView("Enter Pin to proceed",
                           textAlign: TextAlign.left,
                           weight: FontWeight.w500),
                       const SizedBox(
@@ -120,10 +126,21 @@ class _SetPinScreenState extends State<SetUserPinScreen> {
                         const TextStyle(fontSize: 16, height: 1.6),
                         enableActiveFill: false,
                         keyboardType: TextInputType.number,
-                        onCompleted: (v) {},
+                        onCompleted: (v) {
+                          isValidUserPin ?
+                          Navigator.of(context).pushNamed(AppRoutes.home)
+                          :  showTopModalSheet<String>(
+                              context: context,
+                              child: ShowDialog(
+                                title: "Incorrect pin, kindly try again",
+                                isError: true,
+                                onPressed: () {},
+                              ));
+                          ;
+                        },
                         onChanged: (value) {
-                          model.setPin(value);
-                          model.validUserPin();
+                          model.setEnteredPin(value);
+                          model.validUserInputPin();
                           print(value);
                         },
                         beforeTextPaste: (text) {
@@ -155,23 +172,55 @@ class _SetPinScreenState extends State<SetUserPinScreen> {
                     ],
                   ),
                 ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Divider(
+                        height: 1,
+                        color: ThemeConfig.btnBorderColor,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    AppTextView.getAppTextView("OR",
+                        color: ThemeConfig.greyColor),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    Expanded(
+                      child: Divider(
+                        height: 1,
+                        //thickness: 4,
+                        color: ThemeConfig.btnBorderColor,
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(
-                  height: 50,
+                  height: 24,
+                ),
+                const SizedBox(
+                  height: 30,
                 ),
                 Sized24Container(
                   child: AppButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed(AppRoutes.congrats, arguments: token);
+                        Navigator.of(context).pushNamed(AppRoutes.signIn);
                       },
-                      title: AppStrings.createPin,
-                      enabled: isValidUserPin
-                          ? true
-                          : false),
+                      title: "Go to Login",
+                      enabled: true),
                 ),
+
               ],
             ),
           ),
         )
     );
   }
+  getUserPin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    context.read(setUserPinProvider).confirmPin = prefs.getString('userAuthPin').toString();
+  }
+
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:Smartpay/data/core/enum/view_state.dart';
+import 'package:Smartpay/data/core/table_constants.dart';
 import 'package:Smartpay/routes/locator.dart';
 import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/theme/theme_config.dart';
@@ -19,6 +20,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final userInfoProvider = ChangeNotifierProvider.autoDispose(
     (ref) => getIt.get<GetUserInfoViewModel>());
@@ -129,6 +131,8 @@ class _GetUserInfoScreen extends State<GetUserInfoScreen> {
                         AppTextField(
                           hint: AppStrings.fullName,
                           onChanged: (v) {
+                            final input = v.toString().trim().split(" ");
+                            storageService.storeItem(key: DbTable.FIRST_NAME_TABLE, value: input.first);
                             model.setFullName(v);
                             model.validUserInfo();
                           },
@@ -214,6 +218,7 @@ class _GetUserInfoScreen extends State<GetUserInfoScreen> {
     print('email ${viewModel.email}');
     print('country ${viewModel.selectedCountryCode}');
     print('password ${viewModel.password}');
+    print('password ${viewModel.token}');
     var mail = await viewModel.registerUser(
       viewModel.fullName,
       viewModel.userName,
@@ -224,8 +229,15 @@ class _GetUserInfoScreen extends State<GetUserInfoScreen> {
     );
     if (viewModel.viewState == ViewState.success) {
       print('register user details $mail');
-      Navigator.of(context).pushNamed(AppRoutes.setUserPin);
+      print('register user token ${viewModel.token}');
+      setToken(viewModel.token);
+      Navigator.of(context).pushNamed(AppRoutes.setUserPin, arguments: viewModel.token);
     }
+  }
+
+  setToken(token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('token', token);
   }
 
   @override

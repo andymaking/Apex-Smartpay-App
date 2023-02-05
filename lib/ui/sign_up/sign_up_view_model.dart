@@ -60,7 +60,6 @@ class SignUpViewModel extends BaseViewModel {
       var response = await userRepository.getEmailToken(email);
       setViewState(ViewState.success);
       sharedPreference.saveEmail(email);
-      print("Showing email token response::: $response");
       return response;
     } catch (error) {
       setViewState(ViewState.error);

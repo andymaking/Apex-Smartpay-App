@@ -60,7 +60,7 @@ class TopModalSheet<T> extends StatefulWidget {
   final Widget child;
   Color backgroundColor;
 
-  TopModalSheet({Key? key, required this.child, this.backgroundColor = const Color(0xff111827)}): super(key: key);
+  TopModalSheet({Key? key, required this.child, this.backgroundColor =  Colors.transparent}): super(key: key);
 
   @override
   TopModalSheetState<T> createState() => TopModalSheetState<T>();

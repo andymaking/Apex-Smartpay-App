@@ -8,6 +8,7 @@ import 'package:Smartpay/ui/components/custom_dialog.dart';
 import 'package:Smartpay/ui/components/toast.dart';
 import 'package:Smartpay/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInViewModel extends BaseViewModel {
   final userRepository = getIt<UserRepository>();
@@ -15,7 +16,9 @@ class SignInViewModel extends BaseViewModel {
   final TextEditingController passwordController = TextEditingController();
 
   String email = "";
+  String token = "";
   String password = "";
+  String message = "";
   String errorMessage = "";
   bool isValidSignIn = false;
 
@@ -48,15 +51,15 @@ class SignInViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<LoginUserResponse?> signIn(String email,String password,
+  Future<String?> signIn(String email,String password,
       BuildContext context) async {
     try {
       setViewState(ViewState.loading);
       var response = await userRepository.login(email, password);
-      storageService.storeItem(key: DbTable.EMAIL_TABLE_NAME, value: email);
-      storageService.storeItem(key: DbTable.PASSWORD_TABLE_NAME, value: password);
+      setLogin(true);
       setViewState(ViewState.success);
-      print("Showing register response::: $response");
+      token = response.toString();
+
       return response;
     } catch (error) {
       setViewState(ViewState.error);
@@ -70,4 +73,10 @@ class SignInViewModel extends BaseViewModel {
           ));
     }
   }
+  setLogin(val) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('log', val);
+    notifyListeners();
+  }
+
 }

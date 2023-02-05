@@ -4,13 +4,15 @@ import 'package:Smartpay/data/repository/user_repository.dart';
 import 'package:Smartpay/data/services/storage-service.dart';
 import 'package:Smartpay/routes/locator.dart';
 import 'package:Smartpay/ui/base_view_model.dart';
+import 'package:Smartpay/ui/components/custom_dialog.dart';
 import 'package:Smartpay/ui/components/toast.dart';
 import 'package:Smartpay/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SetUserPinViewModel extends BaseViewModel {
   final userRepository = getIt<UserRepository>();
-  //final store = getIt<StorageService>();
   TextEditingController pinController = TextEditingController();
 
   ViewState _state = ViewState.idle;
@@ -18,10 +20,18 @@ class SetUserPinViewModel extends BaseViewModel {
   ViewState get viewState => _state;
   String errorMessage = "";
   String pin = "";
+  String enteredPin = "";
   bool isValidUserPin = false;
+  bool isValidUserInputPin = false;
+  String confirmPin = "";
 
   setPin(String p) {
     pin = p;
+    notifyListeners();
+  }
+
+  setEnteredPin(String p) {
+    enteredPin = p;
     notifyListeners();
   }
 
@@ -35,6 +45,11 @@ class SetUserPinViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void validUserInputPin() {
+    isValidUserInputPin = enteredPin.isNotEmpty && enteredPin == confirmPin;
+    notifyListeners();
+  }
+
   void setError(String error) {
     errorMessage = error;
     notifyListeners();
@@ -43,13 +58,40 @@ class SetUserPinViewModel extends BaseViewModel {
   createPin() async {
     try {
       setViewState(ViewState.loading);
-      storageService.storeItem(key: DbTable.PIN_TABLE_NAME, value: pin);
       setViewState(ViewState.success);
-      print("Pin set successful::: $pin");
+      setUserPin(pin);
     } catch (e) {
       viewState = ViewState.idle;
       showCustomToast(e.toString());
     }
+    notifyListeners();
+  }
+
+  Future<String?> signIn(String email,String password,
+      BuildContext context) async {
+    try {
+      setViewState(ViewState.loading);
+      var response = await userRepository.login(email, password);
+      setViewState(ViewState.success);
+
+      return response;
+    } catch (error) {
+      setViewState(ViewState.error);
+      setError(error.toString());
+      await showTopModalSheet<String>(
+          context: context,
+          child: ShowDialog(
+            title: errorMessage,
+            isError: true,
+            onPressed: () {},
+          ));
+    }
+  }
+
+
+  setUserPin(val) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('userAuthPin', val);
     notifyListeners();
   }
 

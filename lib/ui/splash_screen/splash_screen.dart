@@ -1,10 +1,15 @@
 import 'package:Smartpay/data/core/table_constants.dart';
 import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/theme/theme_config.dart';
+import 'package:Smartpay/ui/enter_pin/enter_pin.dart';
+import 'package:Smartpay/ui/sign_in/sign_in.dart';
 import 'package:Smartpay/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'dart:math' as math;
+
+import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,19 +22,34 @@ class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
 
+   bool? isLogIn = false;
 
   @override
   void initState() {
     super.initState();
+    getLogin();
     _controller =
     AnimationController(vsync: this, duration: const Duration(seconds: 2))
       ..forward()
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          storageService.storeItem(key: DbTable.APP_FIRST_TIME_TABLE_NAME, value: "true");
-          Navigator.of(context).pushReplacementNamed(AppRoutes.signIn);
+          AppRelaunch();
         }
       });
+  }
+  Future<Object> AppRelaunch() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isLogIn = prefs.getBool('log');
+    if (isLogIn == true) {
+      return Navigator.of(context).pushReplacementNamed(AppRoutes.enterPin);
+    }else {
+      return Navigator.of(context).pushReplacementNamed(AppRoutes.signIn);
+    }
+  }
+
+  getLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.getBool('log');
   }
 
   @override
