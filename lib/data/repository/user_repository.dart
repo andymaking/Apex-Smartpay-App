@@ -15,7 +15,7 @@ abstract class UserRepository {
   Future<RegisterUserResponse?> register(String fullName, String userName,
       String email, String country, String password);
 
-  Future<LoginUserResponse?> login(String email, String password);
+  Future<String?> login(String email, String password);
 
   Future<String?> changePassword(String password, String confirmPassword,
       String email, String otp);

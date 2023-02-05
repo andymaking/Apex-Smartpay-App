@@ -44,7 +44,6 @@ class EmailVerificationViewModel extends BaseViewModel {
       setViewState(ViewState.loading);
       var response = await userRepository.verifyEmailToken(email, token);
       setViewState(ViewState.success);
-      print("Showing otp response::: $response");
       return response;
     } catch (error) {
       setViewState(ViewState.error);

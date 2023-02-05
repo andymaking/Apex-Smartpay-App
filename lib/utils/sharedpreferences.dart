@@ -7,6 +7,8 @@ class SharedPreference extends ChangeNotifier {
   final String tokenKey = 'token';
   final String firstLaunchKey = 'firstLaunch';
   final String emailKey = 'emailKey';
+  final String nameKey = 'name';
+  final String pinKey = 'pin';
 
 
   // clear shared preferences
@@ -52,5 +54,28 @@ class SharedPreference extends ChangeNotifier {
     return prefs!.getString(emailKey) ?? '';
   }
 
+  /// cache user name
+  void saveFulName(String id) async {
+    prefs = await SharedPreferences.getInstance();
+    prefs!.setString(nameKey, id);
+    notifyListeners();
+  }
 
+  /// get user email
+  Future<String> getFullName() async {
+    prefs = await SharedPreferences.getInstance();
+    return prefs!.getString(nameKey) ?? '';
+  }
+  /// cache user name
+  void savePin(String id) async {
+    prefs = await SharedPreferences.getInstance();
+    prefs!.setString(pinKey, id);
+    notifyListeners();
+  }
+
+  /// get user email
+  Future<String> getPin() async {
+    prefs = await SharedPreferences.getInstance();
+    return prefs!.getString(pinKey) ?? '';
+  }
 }

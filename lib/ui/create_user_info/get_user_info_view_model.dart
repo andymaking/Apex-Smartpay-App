@@ -10,6 +10,8 @@ import 'package:Smartpay/ui/components/custom_dialog.dart';
 import 'package:Smartpay/ui/components/toast.dart';
 import 'package:Smartpay/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GetUserInfoViewModel extends BaseViewModel {
   final userRepository = getIt<UserRepository>();
@@ -123,10 +125,9 @@ class GetUserInfoViewModel extends BaseViewModel {
     try {
       setViewState(ViewState.loading);
       var response = await userRepository.register(fullName, userName, email, country, password);
-      storageService.storeItem(key: DbTable.EMAIL_TABLE_NAME, value: email);
-      storageService.storeItem(key: DbTable.PASSWORD_TABLE_NAME, value: email);
       setViewState(ViewState.success);
-      print("Showing register response::: $response");
+      final input = fullName.toString().trim().split(" ");
+      setToken(email, password, input.first, token);
       return response;
     } catch (error) {
       setViewState(ViewState.error);
@@ -139,5 +140,14 @@ class GetUserInfoViewModel extends BaseViewModel {
             onPressed: () {},
           ));
     }
+  }
+
+  setToken(token,mail, pass, name) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('mail', mail);
+    prefs.setString('pass', pass);
+    prefs.setString('name', name);
+    prefs.setString('tok', token);
+    notifyListeners();
   }
 }

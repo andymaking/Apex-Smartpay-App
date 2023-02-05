@@ -232,6 +232,7 @@ class _LoginScreen extends State<SignInScreen> {
     final viewModel = context.read(signInProvider);
     print('email ${viewModel.email}');
     print('password ${viewModel.password}');
+    print('password ${viewModel.token}');
     var mail = await viewModel.signIn(
         viewModel.email,
         viewModel.password,
@@ -239,7 +240,7 @@ class _LoginScreen extends State<SignInScreen> {
     );
     if (viewModel.viewState == ViewState.success) {
       print('register user details $mail');
-      Navigator.of(context).pushNamed(AppRoutes.home);
+      Navigator.of(context).pushNamed(AppRoutes.home, arguments: viewModel.token);
     }
   }
 

@@ -4,8 +4,7 @@ import 'package:Smartpay/utils/app_text.dart';
 import 'package:Smartpay/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:Smartpay/ui/set_pin/set_pin.dart' as sharedProvider;
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class Congratulations extends StatefulHookWidget {
@@ -18,7 +17,7 @@ class Congratulations extends StatefulHookWidget {
 }
 
 class _CongratulationsState extends State<Congratulations> {
-
+  String name = "";
   @override
   void dispose() {
     //_node.dispose();
@@ -27,8 +26,8 @@ class _CongratulationsState extends State<Congratulations> {
 
   @override
   Widget build(BuildContext context) {
-    final user = useProvider(sharedProvider.setUserPinProvider);
-    
+    getName();
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: SafeArea(
@@ -46,7 +45,7 @@ class _CongratulationsState extends State<Congratulations> {
                         height: 32,
                       ),
                       AppTextView.getAppTextViewBold(
-                          "Congratulations, James"),
+                          "Congratulations, $name"),
                       const SizedBox(
                         height: 12,
                       ),
@@ -61,7 +60,7 @@ class _CongratulationsState extends State<Congratulations> {
                       ),
                       AppButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, AppRoutes.home);
+                            Navigator.pushNamed(context, AppRoutes.home,);
                           },
                           title: AppStrings.getStarted,
                           enabled: true
@@ -73,4 +72,10 @@ class _CongratulationsState extends State<Congratulations> {
         )
     );
   }
+
+  getName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+     name = prefs.getString('name')!;
+  }
+
 }
