@@ -3,6 +3,7 @@ import 'package:Smartpay/ui/congats/congratulations.dart';
 import 'package:Smartpay/ui/create_user_info/get_user_info.dart';
 import 'package:Smartpay/ui/dashboard/dashboard.dart';
 import 'package:Smartpay/ui/enter_pin/enter_pin.dart';
+import 'package:Smartpay/ui/onboarding/onboarding.dart';
 import 'package:Smartpay/ui/set_pin/set_pin.dart';
 import 'package:Smartpay/ui/sign_in/sign_in.dart';
 import 'package:Smartpay/ui/sign_up/sign_up.dart';
@@ -34,6 +35,12 @@ class AppRouter {
       case AppRoutes.signIn:
         return MaterialPageRoute<dynamic>(
           builder: (_) => const SignInScreen(),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case AppRoutes.onBoarding:
+        return MaterialPageRoute<dynamic>(
+          builder: (_) => const OnboardingPage(),
           settings: settings,
           fullscreenDialog: true,
         );

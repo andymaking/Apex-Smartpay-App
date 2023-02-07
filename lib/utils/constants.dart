@@ -39,11 +39,17 @@ class AppStrings {
   static String weSentACode = "We send a code to ( %s ). "
       "Enter it here to verify your identity";
   static String heyThereTellUs = "Hey there! tell us a bit \nabout ";
-  static String weUseStateOfTheArt = "We use state-of-the-art security measures "
+  static String weUseStateOfTheArt =
+      "We use state-of-the-art security measures "
       "to protect your information at all times";
   static String youHaveCompleted = "You’ve completed the onboarding,\nyou can "
       "start using";
-
+  static const onBoardingTitle1 = "Finance app the safest \nand most trusted";
+  static const onBoardingTitle2 = "The fastest transaction \nprocess only here";
+  static const onBoardingDescription1 =
+      "Your finance work starts here. Our here to help \nyou track and deal with speeding up your \ntransactions.";
+  static const onBoardingDescription2 =
+      "Get easy to pay all your bills with just a few \nsteps. Paying your bills become fast and \nefficient.";
 }
 
 class Sized24Container extends StatelessWidget {
@@ -79,6 +85,8 @@ class AppImages {
   static const String ukIcon = "assets/images/ic_uk.svg";
   static const String icCheck = "assets/images/ic_check.svg";
   static const String thumbsUp = "assets/images/ic_thumbs_up.png";
+  static const String oBoardingSlice1 = "assets/images/ic_slide_1.png";
+  static const String oBoardingSlice2 = "assets/images/ic_slide_2.png";
 }
 
 class AppFontSizes {
@@ -100,17 +108,50 @@ const String icNetherLandIcon = "assets/images/ic_netherlands.svg";
 const String icSingaporeIcon = "assets/images/ic_singapore.svg";
 const String icUkIcon = "assets/images/ic_uk.svg";
 
-final dummyCountryFlagList = [icUsaIcon, icUkIcon, icSingaporeIcon, icChinaIcon,
-icNetherLandIcon, icIndonesiaIcon, icUsaIcon, icUkIcon, icSingaporeIcon, icChinaIcon,
-  icNetherLandIcon, icIndonesiaIcon,];
+final dummyCountryFlagList = [
+  icUsaIcon,
+  icUkIcon,
+  icSingaporeIcon,
+  icChinaIcon,
+  icNetherLandIcon,
+  icIndonesiaIcon,
+  icUsaIcon,
+  icUkIcon,
+  icSingaporeIcon,
+  icChinaIcon,
+  icNetherLandIcon,
+  icIndonesiaIcon,
+];
 
-final dummyCountryCodeList = ["US", "UK", "SG",
-  "CN", "NL", "ID", "US", "UK", "SG",
-  "CN", "NL", "ID", ];
+final dummyCountryCodeList = [
+  "US",
+  "UK",
+  "SG",
+  "CN",
+  "NL",
+  "ID",
+  "US",
+  "UK",
+  "SG",
+  "CN",
+  "NL",
+  "ID",
+];
 
-final dummyCountryNameList = ["United States", "United Kingdom", "Singapore",
-  "China", "Netherland", "Indonesia", "United States", "United Kingdom", "Singapore",
-  "China", "Netherland", "Indonesia",];
+final dummyCountryNameList = [
+  "United States",
+  "United Kingdom",
+  "Singapore",
+  "China",
+  "Netherland",
+  "Indonesia",
+  "United States",
+  "United Kingdom",
+  "Singapore",
+  "China",
+  "Netherland",
+  "Indonesia",
+];
 
 class DemoCountryValues {
   static final List<CountryModel> countries = [
