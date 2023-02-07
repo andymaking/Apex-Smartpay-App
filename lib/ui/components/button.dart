@@ -1,6 +1,8 @@
 import 'package:Smartpay/theme/theme_config.dart';
-import 'package:Smartpay/utils/app_fonts.dart';
+import 'package:Smartpay/utils/app_text.dart';
+import 'package:Smartpay/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
   Function()? onPressed;
@@ -9,9 +11,9 @@ class AppButton extends StatelessWidget {
 
   AppButton(
       {Key? key,
-        required this.onPressed,
-        required this.title,
-        required this.enabled,})
+      required this.onPressed,
+      required this.title,
+      required this.enabled,})
       : super(key: key);
 
   @override
@@ -21,7 +23,7 @@ class AppButton extends StatelessWidget {
         padding: EdgeInsets.zero,
         onPressed: enabled ? onPressed : null,
         child: Container(
-          height: 56,
+          height: 50,
           padding: const EdgeInsets.symmetric(
               vertical: 2.5,
               horizontal: 16),
@@ -30,7 +32,14 @@ class AppButton extends StatelessWidget {
             color: enabled ? ThemeConfig.darkColor : ThemeConfig.darkColor.withOpacity(0.7),
           ),
           child: Center(
-            child: AppFontsStyle.getAppTextViewBold(title, size:AppFontsStyle.titleFontSize16, color: ThemeConfig.lightPrimary)
+            child: AppTextView.getAppTextViewBold(
+                title,
+                size: AppFontSizes.titleFontSize16,
+                color: ThemeConfig.lightPrimary,
+                weight: FontWeight.w700,
+                height: 1.5,
+                letterSpacing: 0.3
+            )
           ),
         ));
   }
