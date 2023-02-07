@@ -23,6 +23,7 @@ class _SplashScreenState extends State<SplashScreen>
   late final AnimationController _controller;
 
    bool? isLogIn = false;
+   bool? isFirstAppLunch = false;
 
   @override
   void initState() {
@@ -40,10 +41,13 @@ class _SplashScreenState extends State<SplashScreen>
   Future<Object> AppRelaunch() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isLogIn = prefs.getBool('log');
+    isFirstAppLunch = prefs.getBool('firstAppLunch');
     if (isLogIn == true) {
       return Navigator.of(context).pushReplacementNamed(AppRoutes.enterPin);
-    }else {
+    }else if(isFirstAppLunch == true){
       return Navigator.of(context).pushReplacementNamed(AppRoutes.signIn);
+    } else {
+      return Navigator.of(context).pushReplacementNamed(AppRoutes.onBoarding);
     }
   }
 

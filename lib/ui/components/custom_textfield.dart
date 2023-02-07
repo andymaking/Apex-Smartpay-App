@@ -39,6 +39,15 @@ class AppTextField extends StatelessWidget {
         keyboardType: keyboardType,
         autofocus: false,
         cursorColor: ThemeConfig.darkColor,
+        style: TextStyle(
+          fontFamily: AppStrings.fontFamily,
+          color: ThemeConfig.darkColor,
+          fontSize: AppFontSizes.titleFontSize16,
+          fontWeight: FontWeight.w600,
+          fontStyle: FontStyle.normal,
+          decoration: TextDecoration.none,
+          height: 1.5,
+        ),
         decoration: InputDecoration(
           hintText: hint,
           filled: true,
@@ -116,6 +125,15 @@ class _AppPasswordFieldState extends State<AppPasswordField> {
         autocorrect: false,
         obscureText: obscureText,
         obscuringCharacter: '●',
+        style: TextStyle(
+            fontFamily: AppStrings.fontFamily,
+            color: ThemeConfig.darkColor,
+            fontSize: AppFontSizes.titleFontSize16,
+            fontWeight: FontWeight.w600,
+            fontStyle: FontStyle.normal,
+            height: 1.5,
+            letterSpacing: 2
+        ),
         cursorColor: ThemeConfig.darkColor,
         controller: widget.controller,
         onChanged: (value) => widget.onChanged!(value),
@@ -132,7 +150,9 @@ class _AppPasswordFieldState extends State<AppPasswordField> {
               fontWeight: FontWeight.w400,
               fontStyle: FontStyle.normal,
               decoration: TextDecoration.none,
-              height: 1.5),
+              height: 1.5,
+            letterSpacing: 0.3
+          ),
           labelStyle: TextStyle(
             fontFamily: AppStrings.fontFamily,
             color: ThemeConfig.darkColor,
