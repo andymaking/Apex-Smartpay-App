@@ -18,15 +18,17 @@ class Congratulations extends StatefulHookWidget {
 
 class _CongratulationsState extends State<Congratulations> {
   String name = "";
-  @override
-  void dispose() {
-    //_node.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
+    final fn = ModalRoute.of(context)?.settings.arguments.toString();
+    final firstName = fn.toString().split(" ");
+
     getName();
+
+    print("NAME::: $name");
+    print("FIRST_NAME::: $firstName");
+
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -45,7 +47,7 @@ class _CongratulationsState extends State<Congratulations> {
                         height: 32,
                       ),
                       AppTextView.getAppTextViewBold(
-                          "Congratulations, $name"),
+                          "Congratulations, ${firstName.first}"),
                       const SizedBox(
                         height: 12,
                       ),
@@ -75,7 +77,7 @@ class _CongratulationsState extends State<Congratulations> {
 
   getName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-     name = prefs.getString('name')!;
+    name = prefs.getString('name').toString();
   }
 
 }

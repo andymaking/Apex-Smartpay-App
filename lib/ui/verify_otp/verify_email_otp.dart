@@ -69,7 +69,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                       children: [
                         const AppToolbar(),
                         Padding(
-                          padding: const EdgeInsets.only(left: 24.0, right: 24),
+                          padding: const EdgeInsets.only(left: 24.0, right: 24, top: 24),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -101,13 +101,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                                 obscureText: false,
                                 obscuringCharacter: '*',
                                 animationType: AnimationType.fade,
-                                validator: (v) {
-                                  if (v!.length < 5) {
-                                    return "Please enter you five digit confirmation code.";
-                                  } else {
-                                    return null;
-                                  }
-                                },
+                                validator: (v) {},
                                 pinTheme: PinTheme(
                                   borderWidth: 1,
                                   selectedColor: ThemeConfig.darkAccent,

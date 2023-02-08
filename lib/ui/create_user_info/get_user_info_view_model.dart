@@ -126,8 +126,6 @@ class GetUserInfoViewModel extends BaseViewModel {
       setViewState(ViewState.loading);
       var response = await userRepository.register(fullName, userName, email, country, password);
       setViewState(ViewState.success);
-      final input = fullName.toString().trim().split(" ");
-      setToken(email, password, input.first, token);
       return response;
     } catch (error) {
       setViewState(ViewState.error);

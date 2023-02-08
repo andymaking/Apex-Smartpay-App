@@ -24,6 +24,7 @@ class SetUserPinViewModel extends BaseViewModel {
   bool isValidUserPin = false;
   bool isValidUserInputPin = false;
   String confirmPin = "";
+  String token = "";
 
   setPin(String p) {
     pin = p;
@@ -41,7 +42,7 @@ class SetUserPinViewModel extends BaseViewModel {
   }
 
   void validUserPin() {
-    isValidUserPin = pin.isNotEmpty;
+    isValidUserPin = pin.isNotEmpty && pin.length == 5;
     notifyListeners();
   }
 
@@ -73,7 +74,7 @@ class SetUserPinViewModel extends BaseViewModel {
       setViewState(ViewState.loading);
       var response = await userRepository.login(email, password);
       setViewState(ViewState.success);
-
+      token = response.toString();
       return response;
     } catch (error) {
       setViewState(ViewState.error);
@@ -92,6 +93,12 @@ class SetUserPinViewModel extends BaseViewModel {
   setUserPin(val) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('userAuthPin', val);
+    notifyListeners();
+  }
+
+  setLogin(val) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('log', val);
     notifyListeners();
   }
 

@@ -42,12 +42,14 @@ class EnterPinScreen extends StatefulHookWidget {
 }
 
 class _EnterPinScreenState extends State<EnterPinScreen> {
-
+  var pin = "";
+  var password = "";
+  var email = "";
 
   @override
-  void dispose() {
-    //_node.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    getUserPin();
   }
 
   @override
@@ -56,7 +58,9 @@ class _EnterPinScreenState extends State<EnterPinScreen> {
     final isValidUserPin = useProvider(validValidUserPinProvider);
     final userPinViewState = useProvider(userPinStateProvider);
     final model = context.read(setUserPinProvider);
-
+    print("PIN::: $pin");
+    print("PASSWORD::: $password");
+    print("EMAIL::: $email");
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -103,13 +107,7 @@ class _EnterPinScreenState extends State<EnterPinScreen> {
                         obscureText: true,
                         obscuringCharacter: '●',
                         animationType: AnimationType.fade,
-                        validator: (v) {
-                          if (v!.length < 5) {
-                            return "Please enter you five digit pin.";
-                          } else {
-                            return null;
-                          }
-                        },
+                        validator: (v) {},
                         pinTheme: PinTheme(
                           borderWidth: 1,
                           selectedColor: ThemeConfig.darkAccent,
@@ -127,16 +125,17 @@ class _EnterPinScreenState extends State<EnterPinScreen> {
                         enableActiveFill: false,
                         keyboardType: TextInputType.number,
                         onCompleted: (v) {
-                          isValidUserPin ?
-                          Navigator.of(context).pushNamed(AppRoutes.home)
-                          :  showTopModalSheet<String>(
-                              context: context,
-                              child: ShowDialog(
-                                title: "Incorrect pin, kindly try again",
-                                isError: true,
-                                onPressed: () {},
-                              ));
-                          ;
+                          if (model.enteredPin == pin){
+                            Navigator.of(context).pushNamed(AppRoutes.home);
+                          } else {
+                            showTopModalSheet<String>(
+                                context: context,
+                                child: ShowDialog(
+                                  title: "Incorrect pin, kindly try again",
+                                  isError: true,
+                                  onPressed: () {},
+                                ));
+                          }
                         },
                         onChanged: (value) {
                           model.setEnteredPin(value);
@@ -218,9 +217,29 @@ class _EnterPinScreenState extends State<EnterPinScreen> {
         )
     );
   }
+
+  void observeLoginState(BuildContext context) async {
+    final viewModel = context.read(setUserPinProvider);
+    print('email $email');
+    print('password $password');
+    //print('password ${viewModel.token}');
+    var mail = await viewModel.signIn(
+        email,
+        password,
+        context
+    );
+    if (viewModel.viewState == ViewState.success) {
+      print('Sign In user details $mail \n$email \n$password \n${viewModel.token}');
+      Navigator.of(context).pushNamed(AppRoutes.home, arguments: viewModel.token);
+    }
+  }
+
   getUserPin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    context.read(setUserPinProvider).confirmPin = prefs.getString('userAuthPin').toString();
+    pin = prefs.getString('userAuthPin').toString();
+    email = prefs.getString('mail').toString();
+    password = prefs.getString('pass').toString();
+    context.read(setUserPinProvider).confirmPin = pin;
   }
 
 }

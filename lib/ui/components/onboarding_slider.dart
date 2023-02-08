@@ -97,14 +97,14 @@ List<SliderModel> getSlides() {
   SliderModel sliderModel = new SliderModel();
 
   // Item 1
-  sliderModel.setImage(AppImages.oBoardingSlice1);
+  sliderModel.setImage(AppImages.onBoardingSlice1);
   sliderModel.setTitle(AppStrings.onBoardingTitle1);
   sliderModel.setDescription(AppStrings.onBoardingDescription1);
   slides.add(sliderModel);
   sliderModel = new SliderModel();
 
   // Item 2
-  sliderModel.setImage(AppImages.oBoardingSlice2);
+  sliderModel.setImage(AppImages.onBoardingSlice2);
   sliderModel.setTitle(AppStrings.onBoardingTitle2);
   sliderModel.setDescription(AppStrings.onBoardingDescription2);
   slides.add(sliderModel);
