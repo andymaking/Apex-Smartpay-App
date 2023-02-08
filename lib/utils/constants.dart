@@ -85,8 +85,8 @@ class AppImages {
   static const String ukIcon = "assets/images/ic_uk.svg";
   static const String icCheck = "assets/images/ic_check.svg";
   static const String thumbsUp = "assets/images/ic_thumbs_up.png";
-  static const String oBoardingSlice1 = "assets/images/ic_slide_1.png";
-  static const String oBoardingSlice2 = "assets/images/ic_slide_2.png";
+  static const String onBoardingSlice1 = "assets/images/ic_slide_1.png";
+  static const String onBoardingSlice2 = "assets/images/ic_slide_2.png";
 }
 
 class AppFontSizes {

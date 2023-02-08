@@ -6,9 +6,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dashboard_view_model.dart';
 
-
-final dashboardProvider = ChangeNotifierProvider.autoDispose(
-        (ref) => getIt.get<DashBoardViewModel>());
+final dashboardProvider =
+ChangeNotifierProvider.autoDispose<DashBoardViewModel>((ref) {
+  ref.onDispose(() {});
+  final viewmodel = getIt.get<DashBoardViewModel>();
+  viewmodel.getHomeMessage();
+  return viewmodel;
+});
 
 final _dashBaordStateProvider = Provider.autoDispose<ViewState>((ref) {
   return ref.watch(dashboardProvider).viewState;
@@ -33,16 +37,6 @@ class _DashboardState extends State<Dashboard>
   @override
   void initState() {
     super.initState();
-    //_controller =
-    // AnimationController(vsync: this, duration: const Duration(seconds: 3))
-    //   ..forward()
-    //   ..addStatusListener((status) {
-    //     if (status == AnimationStatus.completed) {
-    //
-    //     }
-    //   });
-
-    context.read(dashboardProvider).getHomeMessage();
   }
 
   @override

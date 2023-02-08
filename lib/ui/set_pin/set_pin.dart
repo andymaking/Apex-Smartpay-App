@@ -49,7 +49,7 @@ class _SetPinScreenState extends State<SetUserPinScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final token = ModalRoute.of(context)!.settings.arguments as String;
+    final firstName = ModalRoute.of(context)!.settings.arguments as String;
     final isValidUserPin = useProvider(validValidUserPinProvider);
     final userPinViewState = useProvider(userPinStateProvider);
     final model = context.read(setUserPinProvider);
@@ -65,7 +65,7 @@ class _SetPinScreenState extends State<SetUserPinScreen> {
               children: [
                 const AppToolbar(),
                 Padding(
-                  padding: const EdgeInsets.only(left: 24.0, right: 24),
+                  padding: const EdgeInsets.only(left: 24.0, right: 24, top: 24),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -98,11 +98,11 @@ class _SetPinScreenState extends State<SetUserPinScreen> {
                         obscuringCharacter: '●',
                         animationType: AnimationType.fade,
                         validator: (v) {
-                          if (v!.length < 5) {
-                            return "Please enter you five digit pin.";
-                          } else {
-                            return null;
-                          }
+                          // if (v!.length < 5) {
+                          //   return "Please enter you five digit pin.";
+                          // } else {
+                          //   return null;
+                          // }
                         },
                         pinTheme: PinTheme(
                           borderWidth: 1,
@@ -124,6 +124,8 @@ class _SetPinScreenState extends State<SetUserPinScreen> {
                         onChanged: (value) {
                           model.setPin(value);
                           model.validUserPin();
+                          model.setUserPin(value);
+                          model.setLogin(true);
                           print(value);
                         },
                         beforeTextPaste: (text) {
@@ -161,7 +163,7 @@ class _SetPinScreenState extends State<SetUserPinScreen> {
                 Sized24Container(
                   child: AppButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed(AppRoutes.congrats, arguments: token);
+                        Navigator.of(context).pushNamed(AppRoutes.congrats, arguments: firstName);
                       },
                       title: AppStrings.createPin,
                       enabled: isValidUserPin
