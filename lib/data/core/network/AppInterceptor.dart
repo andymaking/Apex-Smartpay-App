@@ -1,24 +1,24 @@
-import 'package:Smartpay/data/core/manager/SessionManager.dart';
 import 'package:Smartpay/routes/locator.dart';
+import 'package:Smartpay/utils/constants.dart';
 import 'package:dio/dio.dart';
 
 
 /// [Interceptor] extension for setting token header
 /// and other required properties for all requests
 class AppInterceptor extends Interceptor {
-  String authToken;
+  String? authToken;
   AppInterceptor(this.authToken);
-
-  final session = getIt<SessionManager>();
 
   /// sets the auth token and Apptoken
   /// Apptoken is an identify for each app
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    if (authToken.isNotEmpty) {
-      options.headers.addAll({"Authorization": "Bearer ${session.authToken}"});
-    }
+    //  authToken = await sharedPreference.getToken();
+    // if (authToken != null) {
+      print("Show AppInterceptor saved token..$authToken");
+      options.headers.addAll({"Authorization": "Bearer $authToken"});
+   // }
     return super.onRequest(options, handler);
   }
 

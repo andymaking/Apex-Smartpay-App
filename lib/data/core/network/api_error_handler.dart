@@ -33,14 +33,14 @@ class ApiError {
           errorDescription = "Connection timeout, please try again later";
           break;
         case DioErrorType.other:
-          errorDescription = "Connection failed...";
+          errorDescription = "Connection to API server failed due to internet connection";
           break;
         case DioErrorType.receiveTimeout:
-          errorDescription = "Timout";
+          errorDescription = "Receive timeout in connection with API server";
           break;
 
         case DioErrorType.sendTimeout:
-          errorDescription = "Connection failed...";
+          errorDescription = "Send timeout in connection with API server";
           break;
         case DioErrorType.response:
           errorType = dioError.response?.statusCode;
@@ -48,7 +48,7 @@ class ApiError {
           break;
       }
     } else {
-      errorDescription = "Oops an error occurred, we are fixing it";
+      errorDescription = "Oops! an error occurred, we are fixing it";
     }
   }
 
@@ -88,6 +88,21 @@ class ApiError {
     }
     if (response.errors!.receiverPhoneNo!.isNotEmpty) {
       return response.errors!.receiverPhoneNo!.first;
+    }
+    if (response.errors!.token!.isNotEmpty) {
+      return response.errors!.token!.first;
+    }
+    if (response.errors!.country!.isNotEmpty) {
+      return response.errors!.country!.first;
+    }
+    if (response.errors!.device_name!.isNotEmpty) {
+      return response.errors!.device_name!.first;
+    }
+    if (response.errors!.password!.isNotEmpty) {
+      return response.errors!.password!.first;
+    }
+    if (response.errors!.secret!.isNotEmpty) {
+      return response.errors!.secret!.first;
     }
     return '';
   }

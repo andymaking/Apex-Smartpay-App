@@ -10,21 +10,15 @@ class HomeResponse {
     this.data
   });
 
-  HomeResponse.fromJson(dynamic json) {
-    status = json['status'];
-    message = json['message'];
-    data = json['data'] != null ? HomeData.fromJson(json['data']) : null;
+  factory HomeResponse.fromJson(Map<String, dynamic> json) {
+    return HomeResponse(
+        status: json['status'] as bool?,
+        message: json['message'] as String?,
+        data: HomeData.fromJson(json['data']));
   }
 
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map['status'] = status;
-    map['message'] = message;
-    if (data != null) {
-      map['data'] = data?.toJson();
-    }
-    return map;
-  }
+  Map<String, dynamic> toJson() =>
+      {'status': status, 'message': message, 'data': data?.toJson()};
 
 }
 
@@ -35,14 +29,14 @@ class HomeData {
     this.secret,
   });
 
-  HomeData.fromJson(dynamic json) {
-    secret = json['secret'];
+  factory HomeData.fromJson(Map<String, dynamic> json) {
+    return HomeData(
+      secret: json['secret'] as String?,
+    );
   }
 
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map['secret'] = secret;
-    return map;
-  }
+  Map<String, dynamic> toJson() => {
+    'secret': secret,
+  };
 
 }

@@ -1,20 +1,20 @@
 class LaravelError {
-  String? msg;
+  bool? status;
+  String? message;
   int? code;
-  bool? success;
   Errors? errors;
 
-  LaravelError({this.msg, this.code, this.success, this.errors});
+  LaravelError({this.status, this.message, this.code, this.errors});
 
   LaravelError.fromJson(Map<String, dynamic> json) {
-    if (json["msg"] is String) {
-      msg = json["msg"];
+    if (json["status"] is bool) {
+      status = json["status"];
+    }
+    if (json["message"] is String) {
+      message = json["message"];
     }
     if (json["code"] is int) {
       code = json["code"];
-    }
-    if (json["success"] is bool) {
-      success = json["success"];
     }
     if (json["errors"] is Map) {
       errors = json["errors"] == null ? null : Errors.fromJson(json["errors"]);
@@ -23,9 +23,9 @@ class LaravelError {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data["msg"] = msg;
+    data["status"] = status;
+    data["message"] = message;
     data["code"] = code;
-    data["success"] = success;
     if (errors != null) {
       data["errors"] = errors?.toJson();
     }
@@ -38,8 +38,14 @@ class Errors {
   List<String>? username = [];
   List<String>? picture = [];
   List<String>? receiverPhoneNo = [];
+  List<String>? token = [];
+  List<String>? country = [];
+  List<String>? device_name = [];
+  List<String>? password = [];
+  List<String>? secret = [];
 
-  Errors({this.email, this.username, this.picture, this.receiverPhoneNo});
+  Errors({this.email, this.username, this.picture, this.receiverPhoneNo,
+    this.token, this.country, this.device_name, this.password, this.secret});
 
   Errors.fromJson(Map<String, dynamic> json) {
     if (json["email"] is List) {
@@ -56,6 +62,26 @@ class Errors {
     if (json["phone"] is List) {
       receiverPhoneNo =
           json["phone"] == null ? [] : List<String>.from(json["phone"]);
+    }
+    if (json["token"] is List) {
+      token =
+          json["token"] == null ? [] : List<String>.from(json["token"]);
+    }
+    if (json["country"] is List) {
+      country =
+          json["country"] == null ? [] : List<String>.from(json["country"]);
+    }
+    if (json["device_name"] is List) {
+      device_name =
+          json["device_name"] == null ? [] : List<String>.from(json["device_name"]);
+    }
+    if (json["password"] is List) {
+      password =
+          json["password"] == null ? [] : List<String>.from(json["password"]);
+    }
+    if (json["secret"] is List) {
+      secret =
+          json["secret"] == null ? [] : List<String>.from(json["secret"]);
     }
   }
 

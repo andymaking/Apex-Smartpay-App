@@ -5,20 +5,19 @@ import 'package:Smartpay/theme/theme_config.dart';
 import 'package:Smartpay/ui/components/app_toolbar.dart';
 import 'package:Smartpay/ui/components/button.dart';
 import 'package:Smartpay/ui/components/custom_dialog.dart';
-import 'package:Smartpay/ui/set_pin/set_pin_view_model.dart';
+import 'package:Smartpay/ui/enter_pin/enter_pin_view_model.dart';
 import 'package:Smartpay/utils/app_text.dart';
 import 'package:Smartpay/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-final setUserPinProvider = ChangeNotifierProvider.autoDispose(
-        (ref) => getIt.get<SetUserPinViewModel>());
+final enterUserPinProvider = ChangeNotifierProvider.autoDispose(
+        (ref) => getIt.get<EnterUserPinViewModel>());
 
 final _validValidUserPinProvider = Provider.autoDispose<bool>((ref) {
-  return ref.watch(setUserPinProvider).isValidUserInputPin;
+  return ref.watch(enterUserPinProvider).isValidUserInputPin;
 });
 
 final validValidUserPinProvider = Provider.autoDispose<bool>((ref) {
@@ -26,7 +25,7 @@ final validValidUserPinProvider = Provider.autoDispose<bool>((ref) {
 });
 
 final _userPinStateProvider = Provider.autoDispose<ViewState>((ref) {
-  return ref.watch(setUserPinProvider).viewState;
+  return ref.watch(enterUserPinProvider).viewState;
 });
 
 final userPinStateProvider = Provider.autoDispose<ViewState>((ref) {
@@ -42,25 +41,20 @@ class EnterPinScreen extends StatefulHookWidget {
 }
 
 class _EnterPinScreenState extends State<EnterPinScreen> {
-  var pin = "";
-  var password = "";
-  var email = "";
 
   @override
   void initState() {
     super.initState();
-    getUserPin();
   }
 
   @override
   Widget build(BuildContext context) {
-    getUserPin();
+    // getUserPin();
+    final model = context.read(enterUserPinProvider);
+    model.getSavedPinEmailAndPassword();
     final isValidUserPin = useProvider(validValidUserPinProvider);
     final userPinViewState = useProvider(userPinStateProvider);
-    final model = context.read(setUserPinProvider);
-    print("PIN::: $pin");
-    print("PASSWORD::: $password");
-    print("EMAIL::: $email");
+
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -125,8 +119,8 @@ class _EnterPinScreenState extends State<EnterPinScreen> {
                         enableActiveFill: false,
                         keyboardType: TextInputType.number,
                         onCompleted: (v) {
-                          if (model.enteredPin == pin){
-                            Navigator.of(context).pushNamed(AppRoutes.home);
+                          if (isValidUserPin){
+                            model.signIn(context);
                           } else {
                             showTopModalSheet<String>(
                                 context: context,
@@ -205,7 +199,7 @@ class _EnterPinScreenState extends State<EnterPinScreen> {
                 Sized24Container(
                   child: AppButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed(AppRoutes.signIn);
+                        navigationService.navigateToReplace(AppRoutes.signIn);
                       },
                       title: "Go to Login",
                       enabled: true),
@@ -216,30 +210,6 @@ class _EnterPinScreenState extends State<EnterPinScreen> {
           ),
         )
     );
-  }
-
-  void observeLoginState(BuildContext context) async {
-    final viewModel = context.read(setUserPinProvider);
-    print('email $email');
-    print('password $password');
-    //print('password ${viewModel.token}');
-    var mail = await viewModel.signIn(
-        email,
-        password,
-        context
-    );
-    if (viewModel.viewState == ViewState.success) {
-      print('Sign In user details $mail \n$email \n$password \n${viewModel.token}');
-      Navigator.of(context).pushNamed(AppRoutes.home, arguments: viewModel.token);
-    }
-  }
-
-  getUserPin() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    pin = prefs.getString('userAuthPin').toString();
-    email = prefs.getString('mail').toString();
-    password = prefs.getString('pass').toString();
-    context.read(setUserPinProvider).confirmPin = pin;
   }
 
 }
