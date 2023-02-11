@@ -2,14 +2,13 @@ import 'package:Smartpay/data/services/navigation_service.dart';
 import 'package:Smartpay/data/services/storage-service.dart';
 import 'package:Smartpay/domain/model/country_model.dart';
 import 'package:Smartpay/routes/locator.dart';
-import 'package:Smartpay/utils/sharedpreferences.dart';
+import 'package:Smartpay/data/cache/sharedpreferences.dart';
 import 'package:flutter/material.dart';
 
 /// create global instance of sharedPreferences global service
 final SharedPreference sharedPreference = SharedPreference();
 final StorageService storageService = getIt<StorageService>();
 final NavigationService navigationService = getIt<NavigationService>();
-// final HiveUtils hiveUtils = HiveUtils();
 
 class AppStrings {
   static String fontFamily = 'SF Pro Display';

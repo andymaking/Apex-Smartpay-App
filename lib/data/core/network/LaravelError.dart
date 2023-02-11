@@ -40,12 +40,12 @@ class Errors {
   List<String>? receiverPhoneNo = [];
   List<String>? token = [];
   List<String>? country = [];
-  List<String>? device_name = [];
+  List<String>? deviceName = [];
   List<String>? password = [];
   List<String>? secret = [];
 
   Errors({this.email, this.username, this.picture, this.receiverPhoneNo,
-    this.token, this.country, this.device_name, this.password, this.secret});
+    this.token, this.country, this.deviceName, this.password, this.secret});
 
   Errors.fromJson(Map<String, dynamic> json) {
     if (json["email"] is List) {
@@ -72,7 +72,7 @@ class Errors {
           json["country"] == null ? [] : List<String>.from(json["country"]);
     }
     if (json["device_name"] is List) {
-      device_name =
+      deviceName =
           json["device_name"] == null ? [] : List<String>.from(json["device_name"]);
     }
     if (json["password"] is List) {

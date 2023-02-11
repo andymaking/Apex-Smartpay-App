@@ -1,14 +1,10 @@
-import 'package:Smartpay/data/core/table_constants.dart';
 import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/theme/theme_config.dart';
-import 'package:Smartpay/ui/enter_pin/enter_pin.dart';
-import 'package:Smartpay/ui/sign_in/sign_in.dart';
 import 'package:Smartpay/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'dart:math' as math;
 
-import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {

@@ -1,5 +1,4 @@
 import 'package:Smartpay/data/core/network_config.dart';
-import 'package:Smartpay/routes/locator.dart';
 import 'package:Smartpay/utils/constants.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -13,7 +12,6 @@ import 'api_error_handler.dart';
 
 enum RequestMethod { post, get, put, delete, upload }
 
-//@lazySingleton
 class NetworkService {
   static const int connectTimeout = 30000;
   static const int receiveTimeout = 30000;
@@ -34,7 +32,6 @@ class NetworkService {
       receiveTimeout: receiveTimeout,
       baseUrl: NetworkConfig.BASE_URL,
     ));
-    // authToken ??= session.authToken;
 
     dio!.interceptors
       ..add(AppInterceptor(authToken))
@@ -62,7 +59,6 @@ class NetworkService {
     Options? options,
     classTag = '',
   }) async {
-    // _initialiseDio();
     Response response;
     var params = queryParams ?? {};
     if (params.keys.contains("searchTerm")) {
@@ -98,8 +94,8 @@ class NetworkService {
           response = await dio!.post(path,
               data: formData,
               queryParameters: params,
-              options: options ??
-                  await _getOption(token: authToken, upload: true),
+              options:
+                  options ?? await _getOption(token: authToken, upload: true),
               onSendProgress: (sent, total) {});
           break;
       }

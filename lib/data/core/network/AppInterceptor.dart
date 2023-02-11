@@ -1,5 +1,3 @@
-import 'package:Smartpay/routes/locator.dart';
-import 'package:Smartpay/utils/constants.dart';
 import 'package:dio/dio.dart';
 
 
@@ -14,11 +12,8 @@ class AppInterceptor extends Interceptor {
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    //  authToken = await sharedPreference.getToken();
-    // if (authToken != null) {
       print("Show AppInterceptor saved token..$authToken");
       options.headers.addAll({"Authorization": "Bearer $authToken"});
-   // }
     return super.onRequest(options, handler);
   }
 
