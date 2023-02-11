@@ -1,6 +1,7 @@
 import 'package:Smartpay/data/core/enum/view_state.dart';
 import 'package:Smartpay/data/core/network/App.logger.dart';
 import 'package:Smartpay/data/repository/user_repository.dart';
+import 'package:Smartpay/domain/model/home.dart';
 import 'package:Smartpay/routes/locator.dart';
 import 'package:Smartpay/ui/base_view_model.dart';
 
@@ -26,28 +27,13 @@ class DashBoardViewModel extends BaseViewModel {
   }
 
   /// get user secret message
-  Future<String?> getHomeMessage() async {
+  Future<HomeResponse?> getHomeMessage() async {
     getLogger("getHomeMessage");
     try {
       setViewState(ViewState.loading);
       var response = await userRepository.getHomeMessage();
       setViewState(ViewState.success);
-      message = response.toString();
-      return response;
-    } catch (error) {
-      setViewState(ViewState.error);
-      setError(error.toString());
-    }
-  }
-
-  /// get user secret message
-  Future<String?> getHomeFromLogin() async {
-    getLogger("getHomeFromLogin");
-    try {
-      setViewState(ViewState.loading);
-      var response = await userRepository.getHomeMessage();
-      setViewState(ViewState.success);
-      message = response.toString();
+      message = response?.data?.secret ?? "";
       return response;
     } catch (error) {
       setViewState(ViewState.error);

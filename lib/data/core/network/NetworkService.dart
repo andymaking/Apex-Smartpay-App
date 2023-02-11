@@ -1,6 +1,6 @@
-import 'package:Smartpay/data/core/manager/SessionManager.dart';
 import 'package:Smartpay/data/core/network_config.dart';
 import 'package:Smartpay/routes/locator.dart';
+import 'package:Smartpay/utils/constants.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'AppInterceptor.dart';
@@ -19,29 +19,31 @@ class NetworkService {
   static const int receiveTimeout = 30000;
   Dio? dio;
   String? baseUrl;
-
-  final session = getIt<SessionManager>();
+  String authToken = "";
 
   NetworkService({this.baseUrl}) {
     _initialiseDio();
   }
 
   /// Initialize essential class properties
-  void _initialiseDio() {
+  void _initialiseDio() async {
+    authToken = await sharedPreference.getToken();
+    print("Show _initialiseDio saved token..$authToken");
     dio = Dio(BaseOptions(
       connectTimeout: connectTimeout,
       receiveTimeout: receiveTimeout,
       baseUrl: NetworkConfig.BASE_URL,
     ));
     // authToken ??= session.authToken;
+
     dio!.interceptors
-      ..add(AppInterceptor(session.authToken))
+      ..add(AppInterceptor(authToken))
       ..add(LogInterceptor(requestBody: true))
       ..add(PrettyDioLogger(
           requestHeader: true,
           requestBody: true,
           responseBody: true,
-          responseHeader: false,
+          responseHeader: true,
           error: true,
           compact: true,
           maxWidth: 90));
@@ -72,32 +74,32 @@ class NetworkService {
           response = await dio!.post(path,
               queryParameters: params,
               data: data,
-              options: options ?? await _getOption(token: session.authToken));
+              options: options ?? await _getOption(token: authToken));
           break;
         case RequestMethod.get:
           response = await dio!.get(path,
               queryParameters: params,
-              options: options ?? await _getOption(token: session.authToken));
+              options: options ?? await _getOption(token: authToken));
 
           break;
         case RequestMethod.put:
           response = await dio!.put(path,
               queryParameters: params,
               data: data,
-              options: options ?? await _getOption(token: session.authToken));
+              options: options ?? await _getOption(token: authToken));
           break;
         case RequestMethod.delete:
           response = await dio!.delete(path,
               queryParameters: params,
               data: data,
-              options: options ?? await _getOption(token: session.authToken));
+              options: options ?? await _getOption(token: authToken));
           break;
         case RequestMethod.upload:
           response = await dio!.post(path,
               data: formData,
               queryParameters: params,
               options: options ??
-                  await _getOption(token: session.authToken, upload: true),
+                  await _getOption(token: authToken, upload: true),
               onSendProgress: (sent, total) {});
           break;
       }

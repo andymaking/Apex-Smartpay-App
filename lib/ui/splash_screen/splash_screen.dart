@@ -39,15 +39,14 @@ class _SplashScreenState extends State<SplashScreen>
       });
   }
   Future<Object> AppRelaunch() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    isLogIn = prefs.getBool('log');
-    isFirstAppLunch = prefs.getBool('firstAppLunch');
+    isLogIn = await sharedPreference.getIsLoggedIn();
+    isFirstAppLunch = await sharedPreference.getAppFirstLaunch();
     if (isLogIn == true) {
-      return Navigator.of(context).pushReplacementNamed(AppRoutes.enterPin);
+      return navigationService.navigateToReplace(AppRoutes.enterPin);
     }else if(isFirstAppLunch == true){
-      return Navigator.of(context).pushReplacementNamed(AppRoutes.signIn);
+      return navigationService.navigateToReplace(AppRoutes.signIn);
     } else {
-      return Navigator.of(context).pushReplacementNamed(AppRoutes.onBoarding);
+      return navigationService.navigateToReplace(AppRoutes.onBoarding);
     }
   }
 

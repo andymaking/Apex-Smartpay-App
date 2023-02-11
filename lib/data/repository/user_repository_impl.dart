@@ -3,6 +3,7 @@ import 'package:Smartpay/data/cache/user.cache.dart';
 import 'package:Smartpay/data/core/table_constants.dart';
 import 'package:Smartpay/data/remote/user_remote.dart';
 import 'package:Smartpay/data/repository/user_repository.dart';
+import 'package:Smartpay/domain/model/home.dart';
 import 'package:Smartpay/domain/model/login_user.dart';
 import 'package:Smartpay/domain/model/register_user.dart';
 import 'package:Smartpay/domain/model/token_meta_data.dart';
@@ -11,7 +12,6 @@ import 'package:Smartpay/utils/sharedpreferences.dart';
 
 class UserRepositoryImpl extends UserRepository {
   final UserRemote userRemote;
-  // final UserCache userCache;
   UserRepositoryImpl(this.userRemote,);
 
   @override
@@ -32,24 +32,13 @@ class UserRepositoryImpl extends UserRepository {
   }
 
   @override
-  Future<String?> getHomeMessage() async {
+  Future<HomeResponse?> getHomeMessage() async {
     return await userRemote.getHomeMessage();
   }
 
   @override
-  Future<String?> login(String email, String password) async {
+  Future<LoginUserResponse?> login(String email, String password) async {
     final response = await userRemote.login(email, password);
-    storageService.storeItem(key: DbTable.LOGIN_TABLE_NAME, value: "true");
-    //await userCache.saveUserLogin(response!.data!);
-    // await userCache.updateUserFirstTime(true);
-    // final tokenMeta = TokenMetaData(
-    //     "Bearer " "response?.data?.token}",
-    //     "${response?.data?.user?.fullName}",
-    //     "${response?.data?.user?.email}",
-    //     "${response?.data?.user?.id}",
-    //     DateTime.now().millisecondsSinceEpoch.toDouble(),
-    //     );
-    // await userCache.saveTokenMetaData(tokenMeta);
     return response;
   }
 

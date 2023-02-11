@@ -1,5 +1,5 @@
 import 'package:Smartpay/data/cache/user.cache.dart';
-import 'package:Smartpay/data/core/manager/SessionManager.dart';
+import 'package:Smartpay/data/core/network/NetworkService.dart';
 import 'package:Smartpay/data/core/network_config.dart';
 import 'package:Smartpay/data/remote/user_remote.dart';
 import 'package:Smartpay/data/remote/user_remote_impl.dart';
@@ -10,6 +10,7 @@ import 'package:Smartpay/data/services/storage-service.dart';
 import 'package:Smartpay/domain/model/token_meta_data.dart';
 import 'package:Smartpay/ui/create_user_info/get_user_info_view_model.dart';
 import 'package:Smartpay/ui/dashboard/dashboard_view_model.dart';
+import 'package:Smartpay/ui/enter_pin/enter_pin_view_model.dart';
 import 'package:Smartpay/ui/set_pin/set_pin_view_model.dart';
 import 'package:Smartpay/ui/sign_in/sign_in_view_model.dart';
 import 'package:Smartpay/ui/sign_up/sign_up_view_model.dart';
@@ -26,24 +27,10 @@ GetIt getIt = GetIt.I;
 dependenciesInjectorSetup() async {
   //initialize WidgetsFlutterBinding
   WidgetsFlutterBinding.ensureInitialized();
-  //initialize Hive
 
   //Interceptors configuration
   getIt.registerFactory(() {
     Dio dio = Dio();
-    dio.options.headers['Client-Id'] = NetworkConfig.CLIENT_ID;
-    dio.options.headers['Client-key'] = NetworkConfig.CLIENT_KEY;
-    dio.options.headers['Client-Secret'] = NetworkConfig.CLIENT_SECRET;
-    dio.interceptors.add(PrettyDioLogger());
-    // customization what should print on logs
-    dio.interceptors.add(PrettyDioLogger(
-        requestHeader: true,
-        requestBody: true,
-        responseBody: true,
-        responseHeader: false,
-        error: true,
-        compact: true,
-        maxWidth: 90));
     return dio;
   });
 
@@ -53,17 +40,17 @@ dependenciesInjectorSetup() async {
   getIt.registerFactory<EmailVerificationViewModel>(() => EmailVerificationViewModel());
   getIt.registerFactory<GetUserInfoViewModel>(() => GetUserInfoViewModel());
   getIt.registerFactory<SetUserPinViewModel>(() => SetUserPinViewModel());
+  getIt.registerFactory<EnterUserPinViewModel>(() => EnterUserPinViewModel());
   getIt.registerFactory<DashBoardViewModel>(() => DashBoardViewModel());
 
   // Services
   getIt.registerLazySingleton<NavigationService>(() => NavigationService());
   getIt.registerLazySingleton<StorageService>(() => StorageService());
   getIt.registerLazySingleton<SharedPreference>(() => SharedPreference());
-  getIt.registerLazySingleton<SessionManager>(() => SessionManager());
+  getIt.registerLazySingleton<NetworkService>(() => NetworkService());
+  getIt.registerLazySingleton<UserRemoteImpl>(() => UserRemoteImpl(getIt<Dio>()));
 
   getIt.registerFactory<UserRemote>(() => UserRemoteImpl(getIt<Dio>()));
   getIt.registerFactory<UserRepository>(
-          () => UserRepositoryImpl(getIt<UserRemote>(), ));
-  Hive.registerAdapter<TokenMetaData>(TokenMetaDataAdapter());
-  await Hive.initFlutter();
+          () => UserRepositoryImpl(getIt<UserRemote>()));
 }

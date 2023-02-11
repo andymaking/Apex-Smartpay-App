@@ -1,6 +1,7 @@
 import 'package:Smartpay/data/core/enum/view_state.dart';
 import 'package:Smartpay/data/core/table_constants.dart';
 import 'package:Smartpay/data/repository/user_repository.dart';
+import 'package:Smartpay/data/services/storage-service.dart';
 import 'package:Smartpay/domain/model/login_user.dart';
 import 'package:Smartpay/routes/locator.dart';
 import 'package:Smartpay/routes/routes.dart';
@@ -8,27 +9,44 @@ import 'package:Smartpay/ui/base_view_model.dart';
 import 'package:Smartpay/ui/components/custom_dialog.dart';
 import 'package:Smartpay/ui/components/toast.dart';
 import 'package:Smartpay/utils/constants.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SignInViewModel extends BaseViewModel {
+class EnterUserPinViewModel extends BaseViewModel {
   final userRepository = getIt<UserRepository>();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
-  String email = "";
-  //String token = "";
-  String password = "";
-  String message = "";
-  String errorMessage = "";
-  bool isValidSignIn = false;
+  TextEditingController pinController = TextEditingController();
 
   ViewState _state = ViewState.idle;
   @override
   ViewState get viewState => _state;
+  String errorMessage = "";
+  String savedPin = "";
+  String password = "";
+  String email = "";
+  String enteredPin = "";
+  bool isValidUserInputPin = false;
+  String confirmPin = "";
+
+  setEnteredPin(String p) {
+    enteredPin = p;
+    notifyListeners();
+  }
 
   void setViewState(ViewState state) {
     _state = state;
+    notifyListeners();
+  }
+
+  void getSavedPinEmailAndPassword() async {
+    savedPin = await sharedPreference.getPin();
+    email = await sharedPreference.getEmail();
+    password = await sharedPreference.getPassword();
+    notifyListeners();
+  }
+
+  void validUserInputPin() {
+    isValidUserInputPin = enteredPin.isNotEmpty && enteredPin == savedPin;
     notifyListeners();
   }
 
@@ -37,28 +55,10 @@ class SignInViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  setEmail(String mail) {
-    email = mail;
-    notifyListeners();
-  }
-
-  setPassword(String pwd) {
-    password = pwd;
-    notifyListeners();
-  }
-
-  void validSignIn() {
-    isValidSignIn = email.isNotEmpty && password.isNotEmpty;
-    notifyListeners();
-  }
-
-  Future<LoginUserResponse?> signIn(
-      BuildContext context) async {
+  Future<LoginUserResponse?> signIn(BuildContext context) async {
     try {
       setViewState(ViewState.loading);
       var response = await userRepository.login(email, password);
-      sharedPreference.saveIsLoggedIn(true);
-      sharedPreference.saveToken("${response?.data?.token}");
       setViewState(ViewState.success);
       navigationService.navigateToReplace(AppRoutes.home);
       return response;

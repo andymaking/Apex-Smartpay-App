@@ -123,9 +123,7 @@ class _LoginScreen extends State<SignInScreen> {
                                   color: ThemeConfig.darkAccent,
                                 ))
                                 : AppButton(
-                                onPressed: () {
-                                  observeLoginState(context);
-                                },
+                                onPressed: () => model.signIn(context),
                                 title: AppStrings.signIn,
                                 enabled: isValidUserInfo ? true : false),
                             const SizedBox(
@@ -226,22 +224,6 @@ class _LoginScreen extends State<SignInScreen> {
             ),
           ),
         );
-  }
-
-  void observeLoginState(BuildContext context) async {
-    final viewModel = context.read(signInProvider);
-    print('email ${viewModel.email}');
-    print('password ${viewModel.password}');
-    print('password ${viewModel.token}');
-    var mail = await viewModel.signIn(
-        viewModel.email,
-        viewModel.password,
-        context
-    );
-    if (viewModel.viewState == ViewState.success) {
-      print('register user details $mail');
-      Navigator.of(context).pushNamed(AppRoutes.home, arguments: viewModel.token);
-    }
   }
 
   @override

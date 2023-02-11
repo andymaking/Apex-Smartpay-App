@@ -70,11 +70,14 @@ class LoginUserData {
     );}
 
   Map<String, dynamic> toJson() => {
-    'full_name': fullName,
-    'userName': userName,
-    'email': email,
-    'country': country,
     'id': id,
+    'full_name': fullName,
+    'username': userName,
+    'email': email,
+    'phone': phone,
+    'phone_country': phoneCountry,
+    'country': country,
+    'avatar': avatar,
   };
 
 }
