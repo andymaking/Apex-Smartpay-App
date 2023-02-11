@@ -1,10 +1,6 @@
-
-import 'package:Smartpay/domain/model/get_email_token.dart';
 import 'package:Smartpay/domain/model/home.dart';
 import 'package:Smartpay/domain/model/login_user.dart';
 import 'package:Smartpay/domain/model/register_user.dart';
-import 'package:Smartpay/domain/model/token_meta_data.dart';
-import 'package:Smartpay/domain/model/verify_email_token.dart';
 
 abstract class UserRepository {
 
@@ -22,7 +18,7 @@ abstract class UserRepository {
 
   Future<String?> forgotPassword(String email,);
 
-  //Future<void> logoutUser(TokenMetaData tokenMetaData);
+  //Future<void> logoutUser();
 
   Future<HomeResponse?> getHomeMessage();
 

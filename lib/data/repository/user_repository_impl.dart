@@ -1,14 +1,8 @@
-
-import 'package:Smartpay/data/cache/user.cache.dart';
-import 'package:Smartpay/data/core/table_constants.dart';
 import 'package:Smartpay/data/remote/user_remote.dart';
 import 'package:Smartpay/data/repository/user_repository.dart';
 import 'package:Smartpay/domain/model/home.dart';
 import 'package:Smartpay/domain/model/login_user.dart';
 import 'package:Smartpay/domain/model/register_user.dart';
-import 'package:Smartpay/domain/model/token_meta_data.dart';
-import 'package:Smartpay/utils/constants.dart';
-import 'package:Smartpay/utils/sharedpreferences.dart';
 
 class UserRepositoryImpl extends UserRepository {
   final UserRemote userRemote;

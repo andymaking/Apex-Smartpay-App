@@ -95,8 +95,8 @@ class ApiError {
     if (response.errors!.country!.isNotEmpty) {
       return response.errors!.country!.first;
     }
-    if (response.errors!.device_name!.isNotEmpty) {
-      return response.errors!.device_name!.first;
+    if (response.errors!.deviceName!.isNotEmpty) {
+      return response.errors!.deviceName!.first;
     }
     if (response.errors!.password!.isNotEmpty) {
       return response.errors!.password!.first;
