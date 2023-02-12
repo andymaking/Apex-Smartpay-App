@@ -11,6 +11,7 @@ class SharedPreference extends ChangeNotifier {
   final String passwordKey = 'password';
   final String tokenKey = 'token';
   final String nameKey = 'name';
+  final String firstNameKey = 'firstName';
   final String pinKey = 'pin';
 
   // clear shared preferences
@@ -43,13 +44,13 @@ class SharedPreference extends ChangeNotifier {
     return prefs!.getBool(firstLaunchKey) ?? false;
   }
 
-  /// cache app first launch
+  /// cache user logged in
   void saveIsLoggedIn(bool id) async {
     prefs = await SharedPreferences.getInstance();
     prefs!.setBool(loggedIn, id);
     notifyListeners();
   }
-  /// get app first launch
+  /// get user logged in
   Future<bool> getIsLoggedIn() async {
     prefs = await SharedPreferences.getInstance();
     return prefs!.getBool(loggedIn) ?? false;
@@ -67,39 +68,52 @@ class SharedPreference extends ChangeNotifier {
     return prefs!.getString(emailKey) ?? '';
   }
 
-  /// cache user email
+  /// cache user password
   void savePassword(String id) async {
     prefs = await SharedPreferences.getInstance();
     prefs!.setString(passwordKey, id);
     notifyListeners();
   }
-  /// get user email
+  /// get user password
   Future<String> getPassword() async {
     prefs = await SharedPreferences.getInstance();
     return prefs!.getString(passwordKey) ?? '';
   }
 
   /// cache user name
-  void saveFulName(String id) async {
+  void saveFullName(String id) async {
     prefs = await SharedPreferences.getInstance();
     prefs!.setString(nameKey, id);
     notifyListeners();
   }
 
-  /// get user email
+  /// get user name
   Future<String> getFullName() async {
     prefs = await SharedPreferences.getInstance();
     return prefs!.getString(nameKey) ?? '';
   }
 
-  /// cache user name
+  /// cache user first name
+  void saveFirstName(String id) async {
+    prefs = await SharedPreferences.getInstance();
+    prefs!.setString(firstNameKey, id);
+    notifyListeners();
+  }
+
+  /// get user first name
+  Future<String> getFirstName() async {
+    prefs = await SharedPreferences.getInstance();
+    return prefs!.getString(firstNameKey) ?? '';
+  }
+
+  /// cache user pin
   void savePin(String id) async {
     prefs = await SharedPreferences.getInstance();
     prefs!.setString(pinKey, id);
     notifyListeners();
   }
 
-  /// get user email
+  /// get user pin
   Future<String> getPin() async {
     prefs = await SharedPreferences.getInstance();
     return prefs!.getString(pinKey) ?? '';

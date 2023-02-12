@@ -98,17 +98,20 @@ class UserRemoteImpl extends NetworkService implements UserRemote {
   @override
   Future<RegisterUserResponse?> register(String fullName, String userName,
       String email, String country, String password,) async {
-    // try {
-    //   var _data = {'full_name': fullName, 'username': userName, 'email': email,
-    //     'country': country, 'password': password, 'device_name': "mobile"};
-    //   var response =
-    //       await dioClient.post("${NetworkConfig.BASE_URL}/auth/register", data: _data);
-    //   final responseData = RegisterUserResponse.fromJson(response.data);
-    //   setToken(responseData.data?.token);
-    //   return responseData;
-    // } catch (error) {
-    //   handleError(error);
-    // }
+    try {
+      var dataBody = {'full_name': fullName, 'username': userName, 'email': email,
+        'country': country, 'password': password, 'device_name': "mobile"};
+      final response = await request(
+          path: UrlPath.register,
+          method: RequestMethod.post,
+          data: dataBody
+      );
+      return RegisterUserResponse.fromJson(response.data);
+    } catch (err) {
+      getLogger("Log register remote error:: $err");
+      print("Show register remote error:: $err");
+      rethrow;
+    }
   }
 
   @override
@@ -122,19 +125,10 @@ class UserRemoteImpl extends NetworkService implements UserRemote {
       );
       return VerifyEmailTokenResponse.fromJson(response.data);
     } catch (err) {
-      getLogger("Log getEmailToken remote error:: $err");
-      print("Show getEmailToken remote error:: $err");
+      getLogger("Log verifyEmailToken remote error:: $err");
+      print("Show verifyEmailToken remote error:: $err");
       rethrow;
     }
-    // try {
-    //   var _data = {'email': email, 'token': token};
-    //   var response =
-    //       await dioClient.post("${NetworkConfig.BASE_URL}/auth/email/verify", data: _data);
-    //   final responseData = VerifyEmailTokenResponse.fromJson(response.data).data;
-    //   return responseData?.email;
-    // } catch (error) {
-    //   handleError(error);
-    // }
   }
 
 }

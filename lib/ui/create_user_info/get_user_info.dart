@@ -189,7 +189,7 @@ class _GetUserInfoScreen extends State<GetUserInfoScreen> {
                               ))
                             : AppButton(
                                 onPressed: () {
-                                  observeRegistrationState(context);
+                                  model.registerUser(context);
                                 },
                                 title: "Continue",
                                 enabled: isValidUserInfo ? true : false),
@@ -209,45 +209,6 @@ class _GetUserInfoScreen extends State<GetUserInfoScreen> {
         ),
       ),
     );
-  }
-
-  void observeRegistrationState(BuildContext context) async {
-    final viewModel = context.read(userInfoProvider);
-    print('fullName ${viewModel.fullName}');
-    print('userName ${viewModel.userName}');
-    print('email ${viewModel.email}');
-    print('country ${viewModel.selectedCountryCode}');
-    print('password ${viewModel.password}');
-    print('password ${viewModel.token}');
-    var mail = await viewModel.registerUser(
-      viewModel.fullName,
-      viewModel.userName,
-      viewModel.email,
-      viewModel.selectedCountryCode,
-      viewModel.password,
-      context
-    );
-    if (viewModel.viewState == ViewState.success) {
-      print('register user details $mail');
-      print('register user token ${viewModel.token}');
-      setToken(viewModel.token);
-      final firstName = viewModel.fullName.toString().trim().split(" ");
-      setUserDetail(viewModel.token, viewModel.email, viewModel.password, firstName.first);
-      Navigator.of(context).pushNamed(AppRoutes.setUserPin, arguments: viewModel.fullName);
-    }
-  }
-
-  setToken(token) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('token', token);
-  }
-
-  setUserDetail(token,mail, pass, name) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('mail', mail);
-    prefs.setString('pass', pass);
-    prefs.setString('name', name);
-    prefs.setString('tok', token);
   }
 
   @override

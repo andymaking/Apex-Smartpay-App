@@ -53,8 +53,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         width: double.infinity,
                         child: GestureDetector(
                           onTap: (){
-                            setFirstLaunch(true);
-                            Navigator.of(context).pushReplacementNamed(AppRoutes.signIn);
+                            sharedPreference.saveAppFirstLaunch(true);
+                            navigationService.navigateToReplace(AppRoutes.signIn);
                           },
                           child: Sized24Container(
                             child: Padding(
@@ -108,8 +108,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       title: 'Get Started',
                       enabled: true,
                       onPressed: () async {
-                        setFirstLaunch(true);
-                        Navigator.of(context).pushReplacementNamed(AppRoutes.signIn);
+                        sharedPreference.saveAppFirstLaunch(true);
+                        navigationService.navigateToReplace(AppRoutes.signIn);
                       },
                     ),
                   ),
@@ -119,9 +119,5 @@ class _OnboardingPageState extends State<OnboardingPage> {
         ),
       ),
     );
-  }
-  setFirstLaunch(val) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('firstAppLunch', val);
   }
 }
