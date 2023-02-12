@@ -176,7 +176,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                         Sized24Container(
                           child: AppButton(
                               onPressed: () {
-                                observeVerifyTokenState(context);
+                                model.verifyEmailToken(context);
                               },
                               title: AppStrings.confirm,
                               enabled: model.otpController.text.length == 5
@@ -188,24 +188,4 @@ class _EmailVerificationState extends State<EmailVerification> {
                   ),
                 ));
   }
-
-  void observeVerifyTokenState(BuildContext context) async {
-    final viewModel = context.read(verifyTokenProvider);
-    print('token ${viewModel.token}');
-    print('email ${viewModel.email}');
-    var mail = await viewModel.verifyEmailToken(viewModel.email, viewModel.token);
-    if (viewModel.viewState == ViewState.success) {
-      print('email token details $mail');
-      Navigator.of(context).pushNamed(AppRoutes.getUserInfo, arguments: viewModel.email);
-    } else {
-      await showTopModalSheet<String>(
-          context: context,
-          child: ShowDialog(
-            title: viewModel.errorMessage,
-            isError: true,
-            onPressed: () {},
-          ));
-    }
-  }
-
 }

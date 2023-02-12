@@ -3,7 +3,9 @@ import 'package:Smartpay/data/repository/user_repository.dart';
 import 'package:Smartpay/data/services/storage-service.dart';
 import 'package:Smartpay/domain/model/get_email_token.dart';
 import 'package:Smartpay/routes/locator.dart';
+import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/ui/base_view_model.dart';
+import 'package:Smartpay/ui/components/custom_dialog.dart';
 import 'package:Smartpay/ui/components/toast.dart';
 import 'package:Smartpay/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -55,16 +57,24 @@ class SignUpViewModel extends BaseViewModel {
   }
 
   /// get user email token
-  Future<GetEmailTokenResponse?> getEmailToken(String email) async {
+  Future<GetEmailTokenResponse?> getEmailToken(BuildContext context) async {
     try {
       setViewState(ViewState.loading);
       var response = await userRepository.getEmailToken(email);
       setViewState(ViewState.success);
+      navigationService.navigateTo(AppRoutes.verifyOtp, argument: email);
       sharedPreference.saveEmail(email);
       return response;
     } catch (error) {
       setViewState(ViewState.error);
       setError(error.toString());
+      await showTopModalSheet<String>(
+          context: context,
+          child: ShowDialog(
+            title: errorMessage,
+            isError: true,
+            onPressed: () {},
+          ));
     }
   }
 }

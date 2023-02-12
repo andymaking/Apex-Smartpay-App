@@ -39,7 +39,7 @@ class UserRemoteImpl extends NetworkService implements UserRemote {
     try {
       var dataBody = { 'email': email};
       final response = await request(
-          path: UrlPath.login,
+          path: UrlPath.getEmailToken,
           method: RequestMethod.post,
           data: dataBody
       );
@@ -112,7 +112,20 @@ class UserRemoteImpl extends NetworkService implements UserRemote {
   }
 
   @override
-  Future<String?> verifyEmailToken(String email, String token) async {
+  Future<VerifyEmailTokenResponse?> verifyEmailToken(String email, String token) async {
+    try {
+      var dataBody = {'email': email, 'token': token};
+      final response = await request(
+          path: UrlPath.verifyEmailOTP,
+          method: RequestMethod.post,
+          data: dataBody
+      );
+      return VerifyEmailTokenResponse.fromJson(response.data);
+    } catch (err) {
+      getLogger("Log getEmailToken remote error:: $err");
+      print("Show getEmailToken remote error:: $err");
+      rethrow;
+    }
     // try {
     //   var _data = {'email': email, 'token': token};
     //   var response =
