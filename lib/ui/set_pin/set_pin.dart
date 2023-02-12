@@ -49,7 +49,6 @@ class _SetPinScreenState extends State<SetUserPinScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final firstName = ModalRoute.of(context)!.settings.arguments as String;
     final isValidUserPin = useProvider(validValidUserPinProvider);
     final userPinViewState = useProvider(userPinStateProvider);
     final model = context.read(setUserPinProvider);
@@ -163,7 +162,7 @@ class _SetPinScreenState extends State<SetUserPinScreen> {
                 Sized24Container(
                   child: AppButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed(AppRoutes.congrats, arguments: firstName);
+                        Navigator.of(context).pushNamed(AppRoutes.congrats);
                       },
                       title: AppStrings.createPin,
                       enabled: isValidUserPin

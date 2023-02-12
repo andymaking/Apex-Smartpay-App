@@ -21,14 +21,9 @@ class _CongratulationsState extends State<Congratulations> {
 
   @override
   Widget build(BuildContext context) {
-    final fn = ModalRoute.of(context)?.settings.arguments.toString();
-    final firstName = fn.toString().split(" ");
 
     getName();
-
-    print("NAME::: $name");
-    print("FIRST_NAME::: $firstName");
-
+    print("FIRST_NAME::: $name");
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -47,7 +42,7 @@ class _CongratulationsState extends State<Congratulations> {
                         height: 32,
                       ),
                       AppTextView.getAppTextViewBold(
-                          "Congratulations, ${firstName.first}"),
+                          "Congratulations, $name"),
                       const SizedBox(
                         height: 12,
                       ),
@@ -62,7 +57,7 @@ class _CongratulationsState extends State<Congratulations> {
                       ),
                       AppButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, AppRoutes.home,);
+                            navigationService.navigateToReplace(AppRoutes.home);
                           },
                           title: AppStrings.getStarted,
                           enabled: true
@@ -76,8 +71,8 @@ class _CongratulationsState extends State<Congratulations> {
   }
 
   getName() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    name = prefs.getString('name').toString();
+    var firstName = await sharedPreference.getFirstName();
+    name = firstName.toString();
   }
 
 }

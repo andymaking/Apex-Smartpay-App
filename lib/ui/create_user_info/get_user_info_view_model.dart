@@ -1,21 +1,16 @@
 import 'package:Smartpay/data/core/enum/view_state.dart';
-import 'package:Smartpay/data/core/table_constants.dart';
 import 'package:Smartpay/data/repository/user_repository.dart';
-import 'package:Smartpay/data/services/storage-service.dart';
 import 'package:Smartpay/domain/model/country_model.dart';
 import 'package:Smartpay/domain/model/register_user.dart';
 import 'package:Smartpay/routes/locator.dart';
+import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/ui/base_view_model.dart';
 import 'package:Smartpay/ui/components/custom_dialog.dart';
-import 'package:Smartpay/ui/components/toast.dart';
 import 'package:Smartpay/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:hive/hive.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class GetUserInfoViewModel extends BaseViewModel {
   final userRepository = getIt<UserRepository>();
-  //final store = getIt<StorageService>();
 
   List<CountryModel> userCountry = [];
   Set<String> currentUserCountry = {};
@@ -90,17 +85,17 @@ class GetUserInfoViewModel extends BaseViewModel {
   }
 
   void setSelectedCountry(name) {
-    this.selectedCountryName = name;
+    selectedCountryName = name;
     notifyListeners();
   }
 
   void setSelectedCountryCode(code) {
-    this.selectedCountryCode = code;
+    selectedCountryCode = code;
     notifyListeners();
   }
 
   void setSelectedCountryFlag(flag) {
-    this.selectedCountryFlag = flag;
+    selectedCountryFlag = flag;
     notifyListeners();
   }
 
@@ -120,12 +115,18 @@ class GetUserInfoViewModel extends BaseViewModel {
   }
 
 
-  Future<RegisterUserResponse?> registerUser(String fullName, String userName,
-      String email, String country, String password, BuildContext context) async {
+  Future<RegisterUserResponse?> registerUser(BuildContext context) async {
     try {
       setViewState(ViewState.loading);
-      var response = await userRepository.register(fullName, userName, email, country, password);
+      var response = await userRepository.register(fullName, userName, email, selectedCountryCode, password);
+      final firstName = fullName.toString().trim().split(" ");
       setViewState(ViewState.success);
+      sharedPreference.saveToken(token);
+      sharedPreference.saveEmail(email);
+      sharedPreference.savePassword(password);
+      sharedPreference.saveFirstName(firstName.first);
+
+      navigationService.navigateTo(AppRoutes.setUserPin);
       return response;
     } catch (error) {
       setViewState(ViewState.error);
@@ -138,14 +139,5 @@ class GetUserInfoViewModel extends BaseViewModel {
             onPressed: () {},
           ));
     }
-  }
-
-  setToken(token,mail, pass, name) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('mail', mail);
-    prefs.setString('pass', pass);
-    prefs.setString('name', name);
-    prefs.setString('tok', token);
-    notifyListeners();
   }
 }
