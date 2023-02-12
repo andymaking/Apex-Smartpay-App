@@ -1,5 +1,6 @@
 import 'package:Smartpay/data/remote/user_remote.dart';
 import 'package:Smartpay/data/repository/user_repository.dart';
+import 'package:Smartpay/domain/model/get_email_token.dart';
 import 'package:Smartpay/domain/model/home.dart';
 import 'package:Smartpay/domain/model/login_user.dart';
 import 'package:Smartpay/domain/model/register_user.dart';
@@ -21,7 +22,7 @@ class UserRepositoryImpl extends UserRepository {
   }
 
   @override
-  Future<String?> getEmailToken(String email) async {
+  Future<GetEmailTokenResponse?> getEmailToken(String email) async {
     return await userRemote.getEmailToken(email);
   }
 

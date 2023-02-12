@@ -1,10 +1,11 @@
+import 'package:Smartpay/domain/model/get_email_token.dart';
 import 'package:Smartpay/domain/model/home.dart';
 import 'package:Smartpay/domain/model/login_user.dart';
 import 'package:Smartpay/domain/model/register_user.dart';
 
 abstract class UserRepository {
 
-  Future<String?> getEmailToken(String email);
+  Future<GetEmailTokenResponse?> getEmailToken(String email);
 
   Future<String?> verifyEmailToken(String email, String token);
 

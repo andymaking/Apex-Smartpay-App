@@ -35,17 +35,20 @@ class UserRemoteImpl extends NetworkService implements UserRemote {
   }
 
   @override
-  Future<String?> getEmailToken(String email) async {
-    // try {
-    //   var _data = {'email': email};
-    //   var response =
-    //       await //dioClient.post("${NetworkConfig.BASE_URL}/auth/email", data: _data);
-    //   final responseData = GetEmailTokenResponse.fromJson(response.data).data;
-    //   return responseData?.token;
-    // } catch (error) {
-    //   getLogger("error: $error");
-    //   handleError(error);
-    // }
+  Future<GetEmailTokenResponse?> getEmailToken(String email) async {
+    try {
+      var dataBody = { 'email': email};
+      final response = await request(
+          path: UrlPath.login,
+          method: RequestMethod.post,
+          data: dataBody
+      );
+      return GetEmailTokenResponse.fromJson(response.data);
+    } catch (err) {
+      getLogger("Log getEmailToken remote error:: $err");
+      print("Show getEmailToken remote error:: $err");
+      rethrow;
+    }
   }
 
   @override
@@ -65,66 +68,27 @@ class UserRemoteImpl extends NetworkService implements UserRemote {
       );
       return HomeResponse.fromJson(response.data);
     } catch (err) {
+      getLogger("Log getHomeMessage remote error:: $err");
       print("getHomeMessage remote error:: $err");
       rethrow;
     }
   }
 
-  // @override
-  // Future<String?> getHomeMessage() async {
-  //   try {
-  //     // var getToken = sharedPreference.getToken();
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     var toaken  = prefs.getString('tokenn');
-  //     var getToken = await storageService.readItem(key: DbTable.TOKEN_TABLE_NAME);
-  //     getLogger("Show token from pref:: $getToken");
-  //     dioClient.options.headers['Authorization'] = "Bearer $toaken";
-  //     dioClient.options.headers['content-type'] = "application/json; charset=utf-8";
-  //     var response = await dioClient.get(
-  //       "${NetworkConfig.BASE_URL}/dashboard",
-  //     );
-  //     final responseData = HomeResponse.fromJson(response.data).data;
-  //     print("getHomeMessage.,.,.,.,.  $response");
-  //     getLogger("token....: $toaken");
-  //     return responseData?.secret;
-  //   } catch (error) {
-  //     handleError(error);
-  //   }
-  // }
-
   @override
   Future<LoginUserResponse?> login(String email, String password) async {
     try {
-      var _data = { 'email': email, 'password': password, 'device_name': "mobile"};
+      var dataBody = { 'email': email, 'password': password, 'device_name': "mobile"};
       final response = await request(
           path: UrlPath.login,
           method: RequestMethod.post,
-          data: _data);
+          data: dataBody);
       return LoginUserResponse.fromJson(response.data);
     } catch (err) {
+      getLogger("Log login remote error:: $err");
       print("Show login remote error:: $err");
       rethrow;
     }
   }
-
-  // @override
-  // Future<String?> loginn(String email, String password) async {
-  //   try {
-  //     var _data = { 'email': email, 'password': password, 'device_name': "mobile"};
-  //     var response =
-  //         await dioClient.post("${NetworkConfig.BASE_URL}/auth/login", data: _data);
-  //     final responseData = LoginUserResponse.fromJson(response.data);
-  //     session.authToken = responseData.data?.token ?? '';
-  //     setToken(responseData.data?.token);
-  //     getLogger("token....login: $token");
-  //     token = "${responseData.data?.token}";
-  //     storageService.storeItem(key: DbTable.TOKEN_TABLE_NAME, value: responseData.data?.token);
-  //     return responseData.data?.token;
-  //   } catch (error) {
-  //     handleError(error);
-  //     ApiError.fromDio(error);
-  //   }
-  // }
 
   setToken(val) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

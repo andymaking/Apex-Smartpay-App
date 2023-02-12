@@ -1,6 +1,7 @@
 import 'package:Smartpay/data/core/enum/view_state.dart';
 import 'package:Smartpay/data/repository/user_repository.dart';
 import 'package:Smartpay/data/services/storage-service.dart';
+import 'package:Smartpay/domain/model/get_email_token.dart';
 import 'package:Smartpay/routes/locator.dart';
 import 'package:Smartpay/ui/base_view_model.dart';
 import 'package:Smartpay/ui/components/toast.dart';
@@ -54,7 +55,7 @@ class SignUpViewModel extends BaseViewModel {
   }
 
   /// get user email token
-  Future<String?> getEmailToken(String email) async {
+  Future<GetEmailTokenResponse?> getEmailToken(String email) async {
     try {
       setViewState(ViewState.loading);
       var response = await userRepository.getEmailToken(email);
