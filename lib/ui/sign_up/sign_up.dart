@@ -122,7 +122,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                               ))
                             : AppButton(
                                 onPressed: () {
-                                  observeGetEmailTokenState(context);
+                                  model.getEmailToken(context);
                                 },
                                 title: AppStrings.signUp,
                                 enabled: isValidGetEmailToken ? true : false),
@@ -221,25 +221,6 @@ class _SignUpScreen extends State<SignUpScreen> {
         ),
       ),
     );
-  }
-
-  void observeGetEmailTokenState(BuildContext context) async {
-    final viewModel = context.read(getEmailTokenProvider);
-    print('email ${viewModel.email}');
-    var mail = await viewModel.getEmailToken(viewModel.email);
-    if (viewModel.viewState == ViewState.success) {
-      print('email token details $mail');
-      Navigator.of(context)
-          .pushNamed(AppRoutes.verifyOtp, arguments: viewModel.email);
-    } else {
-      await showTopModalSheet<String>(
-          context: context,
-          child: ShowDialog(
-            title: viewModel.errorMessage,
-            isError: true,
-            onPressed: () {},
-          ));
-    }
   }
 
   @override
