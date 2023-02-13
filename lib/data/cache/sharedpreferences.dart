@@ -14,7 +14,7 @@ class SharedPreference extends ChangeNotifier {
   final String firstNameKey = 'firstName';
   final String pinKey = 'pin';
 
-  // clear shared preferences
+  /// clear shared preferences
   Future<void> clear() async {
     prefs = await SharedPreferences.getInstance();
     await prefs!.clear();

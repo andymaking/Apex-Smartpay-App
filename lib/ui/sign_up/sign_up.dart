@@ -4,7 +4,6 @@ import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/theme/theme_config.dart';
 import 'package:Smartpay/ui/components/app_toolbar.dart';
 import 'package:Smartpay/ui/components/button.dart';
-import 'package:Smartpay/ui/components/custom_dialog.dart';
 import 'package:Smartpay/ui/components/custom_textfield.dart';
 import 'package:Smartpay/ui/components/social_auth_button.dart';
 import 'package:Smartpay/ui/sign_up/sign_up_view_model.dart';

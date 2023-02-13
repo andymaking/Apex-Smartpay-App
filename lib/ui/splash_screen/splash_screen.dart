@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'dart:math' as math;
 
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -24,7 +23,6 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    getLogin();
     _controller =
     AnimationController(vsync: this, duration: const Duration(seconds: 2))
       ..forward()
@@ -44,11 +42,6 @@ class _SplashScreenState extends State<SplashScreen>
     } else {
       return navigationService.navigateToReplace(AppRoutes.onBoarding);
     }
-  }
-
-  getLogin() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.getBool('log');
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:Smartpay/data/core/enum/view_state.dart';
 import 'package:Smartpay/routes/locator.dart';
+import 'package:Smartpay/theme/theme_config.dart';
 import 'package:Smartpay/utils/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -32,7 +33,6 @@ class Dashboard extends StatefulHookWidget {
 
 class _DashboardState extends State<Dashboard>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
 
   @override
   void initState() {
@@ -44,6 +44,7 @@ class _DashboardState extends State<Dashboard>
     final message = useProvider(dashboardProvider);
 
     return Scaffold(
+      backgroundColor: ThemeConfig.darkAccent,
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child:
@@ -57,9 +58,21 @@ class _DashboardState extends State<Dashboard>
                   const SizedBox(
                     height: 32,
                   ),
-                  AppTextView.getAppTextViewBold(
-                      message.message,
-                  size: 16),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: ThemeConfig.btnBorderColor,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+                      child: AppTextView.getAppTextViewBold(
+                          message.message,
+                      color: ThemeConfig.lightPrimary,
+                      size: 16),
+                    ),
+                  ),
                   const SizedBox(
                     height: 12,
                   ),

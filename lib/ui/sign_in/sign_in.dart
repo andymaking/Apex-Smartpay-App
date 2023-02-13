@@ -2,7 +2,6 @@ import 'package:Smartpay/data/core/enum/view_state.dart';
 import 'package:Smartpay/routes/locator.dart';
 import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/theme/theme_config.dart';
-import 'package:Smartpay/ui/base_ui.dart';
 import 'package:Smartpay/ui/components/app_toolbar.dart';
 import 'package:Smartpay/ui/components/button.dart';
 import 'package:Smartpay/ui/components/custom_textfield.dart';

@@ -1,16 +1,12 @@
 import 'package:Smartpay/data/core/network/App.logger.dart';
 import 'package:Smartpay/data/core/network/NetworkService.dart';
-import 'package:Smartpay/data/core/network/api_error_handler.dart';
 import 'package:Smartpay/data/core/network/urlPath.dart';
-import 'package:Smartpay/data/core/network_config.dart';
-import 'package:Smartpay/data/core/table_constants.dart';
 import 'package:Smartpay/data/remote/user_remote.dart';
 import 'package:Smartpay/domain/model/get_email_token.dart';
 import 'package:Smartpay/domain/model/home.dart';
 import 'package:Smartpay/domain/model/login_user.dart';
 import 'package:Smartpay/domain/model/register_user.dart';
 import 'package:Smartpay/domain/model/verify_email_token.dart';
-import 'package:Smartpay/routes/locator.dart';
 import 'package:Smartpay/utils/constants.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,7 +14,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// This calls implements the UserRemote logic
 class UserRemoteImpl extends NetworkService implements UserRemote {
 
-  // String token = "";
   final Dio dioClient;
   UserRemoteImpl(this.dioClient,);
 

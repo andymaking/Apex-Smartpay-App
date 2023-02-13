@@ -2,12 +2,10 @@ import 'dart:async';
 import 'package:Smartpay/data/core/enum/view_state.dart';
 import 'package:Smartpay/data/core/table_constants.dart';
 import 'package:Smartpay/routes/locator.dart';
-import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/theme/theme_config.dart';
 import 'package:Smartpay/ui/components/app_toolbar.dart';
 import 'package:Smartpay/ui/components/button.dart';
 import 'package:Smartpay/ui/components/country_view.dart';
-import 'package:Smartpay/ui/components/custom_dialog.dart';
 import 'package:Smartpay/ui/components/custom_textfield.dart';
 import 'package:Smartpay/ui/components/textfield_search.dart';
 import 'package:Smartpay/ui/create_user_info/get_user_info_view_model.dart';
@@ -20,7 +18,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 final userInfoProvider = ChangeNotifierProvider.autoDispose(
     (ref) => getIt.get<GetUserInfoViewModel>());
@@ -54,14 +51,10 @@ class _GetUserInfoScreen extends State<GetUserInfoScreen> {
   final dummySearchList = ['USA', 'United Kingdom', 'Others'];
   final label = "Search";
 
-  //List<bool> isSelected = [false];
   String? _selectedOption;
   int selectedCountryIndex = -1;
-
-  //List<Country> _countryList = [];
   String query = '';
 
-  //Timer? debouncer;
   final countryList = DemoCountryValues.countries;
   int? index;
 
@@ -236,7 +229,6 @@ class _GetUserInfoScreen extends State<GetUserInfoScreen> {
               builder: (BuildContext context, setState) => Container(
                 height: 617,
                 alignment: Alignment.center,
-                //padding: EdgeInsets.symmetric(horizontal: 16),
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(40)),
                     color: Colors.white),
