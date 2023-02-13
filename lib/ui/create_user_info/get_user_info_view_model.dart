@@ -121,7 +121,7 @@ class GetUserInfoViewModel extends BaseViewModel {
       var response = await userRepository.register(fullName, userName, email, selectedCountryCode, password);
       final firstName = fullName.toString().trim().split(" ");
       setViewState(ViewState.success);
-      sharedPreference.saveToken(token);
+      sharedPreference.saveToken("${response?.data?.token}");
       sharedPreference.saveEmail(email);
       sharedPreference.savePassword(password);
       sharedPreference.saveFirstName(firstName.first);

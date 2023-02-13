@@ -108,7 +108,6 @@ class _SetPinScreenState extends State<SetUserPinScreen> {
                           selectedColor: ThemeConfig.darkAccent,
                           inactiveColor:
                           ThemeConfig.darkAccent,
-                          //borderRadius: BorderRadius.circular(12),
                           fieldHeight: 56,
                           fieldWidth: 56,
                         ),
@@ -123,8 +122,6 @@ class _SetPinScreenState extends State<SetUserPinScreen> {
                         onChanged: (value) {
                           model.setPin(value);
                           model.validUserPin();
-                          model.setUserPin(value);
-                          model.setLogin(true);
                           print(value);
                         },
                         beforeTextPaste: (text) {
@@ -142,9 +139,7 @@ class _SetPinScreenState extends State<SetUserPinScreen> {
                             child: Center(
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
-                                children: [
-
-                                ],
+                                children: const [],
                               ),
                             ),
                           ),
@@ -162,7 +157,9 @@ class _SetPinScreenState extends State<SetUserPinScreen> {
                 Sized24Container(
                   child: AppButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed(AppRoutes.congrats);
+                        model.savePrefs();
+                        model.getFirstName();
+                        navigationService.navigateToReplace(AppRoutes.congrats);
                       },
                       title: AppStrings.createPin,
                       enabled: isValidUserPin

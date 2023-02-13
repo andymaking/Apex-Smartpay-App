@@ -49,8 +49,6 @@ dependencies:
   json_annotation: ^4.8.0
   pretty_dio_logger: ^1.1.1
   logger: ^1.1.0
-  equatable: ^2.0.5
-  moor_flutter:
 
 
 dev_dependencies:
@@ -84,35 +82,8 @@ flutter:
        - asset: assets/fonts/SF-Pro-Display-Regular.ttf
        - asset: assets/fonts/SF-Pro-Display-Light.ttf
        - asset: assets/fonts/SF-Pro-Display-Medium.ttf
-       - asset: assets/fonts/SF-Pro-Display-Light.ttf
        - asset: assets/fonts/SF-Pro-Display-Semibold.ttf
        - asset: assets/fonts/SF-Pro-Display-Thin.ttf
 
-
-  #  SF-Pro-Display-Black.ttf
-  #  SF-Pro-Display-BlackItalic.ttf
-  #  SF-Pro-Display-BoldItalic.ttf
-  #  SF-Pro-Display-Heavy.ttf
-  #  SF-Pro-Display-HeavyItalic.ttf
-  #  SF-Pro-Display-LightItalic.ttf
-  #  SF-Pro-Display-MediumItalic.ttf
-  #  SF-Pro-Display-RegularItalic.ttf
-  #  SF-Pro-Display-SemiboldItalic.ttf
-  #  SF-Pro-Display-ThinItalic.ttf
-  #  SF-Pro-Display-Ultralight.ttf
-  #  SF-Pro-Display-UltralightItalic.ttf
-  #  sf-pro-text-bold.ttf
-  #  sf-pro-text-heavy.ttf
-  #  SF-Pro-Text-HeavyItalic.ttf
-  #  sf-pro-text-light.ttf
-  #  SF-Pro-Text-BoldItalic.ttf
-  #  SF-Pro-Text-LightItalic.ttf
-  #  sf-pro-text-medium.ttf
-  #  SF-Pro-Text-MediumItalic.ttf
-  #  sf-pro-text-regular.ttf
-  # SF-Pro-Text-RegularItalic.ttf
-  #  sf-pro-text-semibold.ttf
-  #  SF-Pro-Text-SemiboldItalic.ttf
-  #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

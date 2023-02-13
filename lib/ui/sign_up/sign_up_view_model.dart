@@ -1,6 +1,5 @@
 import 'package:Smartpay/data/core/enum/view_state.dart';
 import 'package:Smartpay/data/repository/user_repository.dart';
-import 'package:Smartpay/data/services/storage-service.dart';
 import 'package:Smartpay/domain/model/get_email_token.dart';
 import 'package:Smartpay/routes/locator.dart';
 import 'package:Smartpay/routes/routes.dart';

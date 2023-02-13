@@ -4,7 +4,8 @@ import 'package:Smartpay/utils/app_text.dart';
 import 'package:Smartpay/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:Smartpay/ui/set_pin/set_pin.dart' as shared;
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 
 class Congratulations extends StatefulHookWidget {
@@ -17,13 +18,11 @@ class Congratulations extends StatefulHookWidget {
 }
 
 class _CongratulationsState extends State<Congratulations> {
-  String name = "";
 
   @override
   Widget build(BuildContext context) {
-
-    getName();
-    print("FIRST_NAME::: $name");
+    final model = context.read(shared.setUserPinProvider);
+    print("FIRST_NAME::: ${model.firstName}");
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -42,7 +41,7 @@ class _CongratulationsState extends State<Congratulations> {
                         height: 32,
                       ),
                       AppTextView.getAppTextViewBold(
-                          "Congratulations, $name"),
+                          "Congratulations, ${model.firstName}"),
                       const SizedBox(
                         height: 12,
                       ),
@@ -68,11 +67,6 @@ class _CongratulationsState extends State<Congratulations> {
               ),
         )
     );
-  }
-
-  getName() async {
-    var firstName = await sharedPreference.getFirstName();
-    name = firstName.toString();
   }
 
 }

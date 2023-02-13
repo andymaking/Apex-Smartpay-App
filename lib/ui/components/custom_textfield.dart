@@ -1,7 +1,5 @@
 import 'package:Smartpay/theme/theme_config.dart';
-import 'package:Smartpay/utils/app_text.dart';
 import 'package:Smartpay/utils/constants.dart';
-import 'package:Smartpay/utils/validate_password.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/services/text_formatter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
