@@ -61,7 +61,7 @@ class SignUpViewModel extends BaseViewModel {
       setViewState(ViewState.loading);
       var response = await userRepository.getEmailToken(email);
       setViewState(ViewState.success);
-      navigationService.navigateTo(AppRoutes.verifyOtp, argument: email);
+      navigationService.navigateTo(AppRoutes.verifyOtp, argument: {email, response?.data?.token});
       sharedPreference.saveEmail(email);
       return response;
     } catch (error) {

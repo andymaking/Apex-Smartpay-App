@@ -19,6 +19,7 @@ class EmailVerificationViewModel extends BaseViewModel {
   String errorMessage = "";
   bool isValidToken = false;
   String token = "";
+  String gottenToken = "";
   String email = "";
 
   void setViewState(ViewState state) {
@@ -44,7 +45,7 @@ class EmailVerificationViewModel extends BaseViewModel {
   Future<VerifyEmailTokenResponse?> verifyEmailToken(BuildContext context) async {
     try {
       setViewState(ViewState.loading);
-      var response = await userRepository.verifyEmailToken(email, token);
+      var response = await userRepository.verifyEmailToken(email, otpController.text);
       setViewState(ViewState.success);
       navigationService.navigateTo(AppRoutes.getUserInfo, argument: email);
       return response;

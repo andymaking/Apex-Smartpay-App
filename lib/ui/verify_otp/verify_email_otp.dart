@@ -50,11 +50,12 @@ class _EmailVerificationState extends State<EmailVerification> {
 
   @override
   Widget build(BuildContext context) {
-    final email = ModalRoute.of(context)!.settings.arguments as String;
+    final arg = ModalRoute.of(context)!.settings.arguments as Set<String?>;
     final isValidVerifyToken = useProvider(validVerifyTokenProviderr);
     final verifyTokenViewState = useProvider(verifyTokenStateProvider);
     final model = context.read(verifyTokenProvider);
-    model.email = email;
+    model.email = arg.first.toString();
+    model.otpController.text = arg.last.toString();
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -75,7 +76,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                               const SizedBox(
                                 height: 12,
                               ),
-                              AppTextView.getAppTextView("We send a code to ( $email ). "
+                              AppTextView.getAppTextView("We send a code to ( ${arg.first} ). "
                                   "Enter it here to verify your identity",
                                   textAlign: TextAlign.left,
                                   weight: FontWeight.w500),
@@ -116,7 +117,11 @@ class _EmailVerificationState extends State<EmailVerification> {
                                     const TextStyle(fontSize: 20, height: 1.6),
                                 enableActiveFill: false,
                                 keyboardType: TextInputType.number,
-                                onCompleted: (v) {},
+                                onCompleted: (value) {
+                                  model.setToken(value);
+                                  model.validateOtpInput();
+                                  print(value);
+                                },
                                 onChanged: (value) {
                                   model.setToken(value);
                                   model.validateOtpInput();
