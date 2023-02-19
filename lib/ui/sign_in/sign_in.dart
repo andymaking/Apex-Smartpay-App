@@ -182,9 +182,6 @@ class _LoginScreen extends State<SignInScreen> {
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 124,
-                      ),
                     ],
                   ),
                   Padding(
