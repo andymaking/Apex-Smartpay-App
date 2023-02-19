@@ -157,7 +157,7 @@ class _SetPinScreenState extends State<SetUserPinScreen> {
                 Sized24Container(
                   child: AppButton(
                       onPressed: () {
-                        model.savePrefs();
+                        model.saveIsUserSetPin();
                         model.getFirstName();
                         navigationService.navigateToReplace(AppRoutes.congrats);
                       },

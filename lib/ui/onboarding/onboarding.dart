@@ -52,7 +52,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         width: double.infinity,
                         child: GestureDetector(
                           onTap: (){
-                            sharedPreference.saveAppFirstLaunch(true);
+                            sharedPreference.saveOnBoardingCompleted(true);
                             navigationService.navigateToReplace(AppRoutes.signIn);
                           },
                           child: Sized24Container(
@@ -107,7 +107,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       title: 'Get Started',
                       enabled: true,
                       onPressed: () async {
-                        sharedPreference.saveAppFirstLaunch(true);
+                        sharedPreference.saveOnBoardingCompleted(true);
                         navigationService.navigateToReplace(AppRoutes.signIn);
                       },
                     ),

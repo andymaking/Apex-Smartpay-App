@@ -7,6 +7,7 @@ import 'package:Smartpay/ui/base_view_model.dart';
 import 'package:Smartpay/ui/components/custom_dialog.dart';
 import 'package:Smartpay/ui/components/toast.dart';
 import 'package:Smartpay/utils/constants.dart';
+import 'package:Smartpay/utils/validations.dart';
 import 'package:flutter/cupertino.dart';
 
 class SignUpViewModel extends BaseViewModel {
@@ -44,15 +45,8 @@ class SignUpViewModel extends BaseViewModel {
   }
 
   void validateEmailInput() {
-    isValidEmail = isValidEmailPattern();
+    isValidEmail = isValidEmails(email);
     notifyListeners();
-  }
-
-  bool isValidEmailPattern() {
-    Pattern pattern =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regex = RegExp(pattern.toString());
-    return regex.hasMatch(email);
   }
 
   /// get user email token

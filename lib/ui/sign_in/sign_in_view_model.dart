@@ -6,6 +6,7 @@ import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/ui/base_view_model.dart';
 import 'package:Smartpay/ui/components/custom_dialog.dart';
 import 'package:Smartpay/utils/constants.dart';
+import 'package:Smartpay/utils/validations.dart';
 import 'package:flutter/cupertino.dart';
 
 class SignInViewModel extends BaseViewModel {
@@ -14,13 +15,17 @@ class SignInViewModel extends BaseViewModel {
   final TextEditingController passwordController = TextEditingController();
 
   String email = "";
+  String savedEmail = "";
+
   //String token = "";
   String password = "";
+  String savedPassword = "";
   String message = "";
   String errorMessage = "";
   bool isValidSignIn = false;
 
   ViewState _state = ViewState.idle;
+
   @override
   ViewState get viewState => _state;
 
@@ -45,12 +50,37 @@ class SignInViewModel extends BaseViewModel {
   }
 
   void validSignIn() {
-    isValidSignIn = email.isNotEmpty && password.isNotEmpty;
+    isValidSignIn = isValidEmails(email)
+        && isValidPasswords(password);
     notifyListeners();
   }
 
-  Future<LoginUserResponse?> signIn(
-      BuildContext context) async {
+  void getSavedPinEmailAndPassword() async {
+    savedEmail = await sharedPreference.getEmail();
+    savedPassword = await sharedPreference.getPassword();
+    notifyListeners();
+  }
+
+  Future<void> verifySignIn(BuildContext context) async {
+    if (email.isNotEmpty &&
+        savedEmail.isNotEmpty &&
+        email == savedEmail &&
+        password.isNotEmpty &&
+        savedPassword.isNotEmpty &&
+        password == savedPassword) {
+      signIn(context);
+    } else {
+      await showTopModalSheet<String>(
+          context: context,
+          child: ShowDialog(
+            title: "Incorrect login details, kindly cross check and try again",
+            isError: true,
+            onPressed: () {},
+          ));
+    }
+  }
+
+  Future<LoginUserResponse?> signIn(BuildContext context) async {
     try {
       setViewState(ViewState.loading);
       var response = await userRepository.login(email, password);
@@ -71,5 +101,4 @@ class SignInViewModel extends BaseViewModel {
           ));
     }
   }
-
 }

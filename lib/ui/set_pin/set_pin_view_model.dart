@@ -51,9 +51,9 @@ class SetUserPinViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  savePrefs() async {
+  saveIsUserSetPin() async {
     sharedPreference.savePin(pin);
-    sharedPreference.saveIsLoggedIn(true);
+    sharedPreference.saveIsUserSetPin(true);
     notifyListeners();
   }
 

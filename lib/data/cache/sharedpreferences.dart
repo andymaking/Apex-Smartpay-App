@@ -4,8 +4,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 SharedPreferences? prefs;
 
 class SharedPreference extends ChangeNotifier {
-  final String firstLaunchKey = 'firstLaunch';
+  final String onBoardingCompletedKey = 'onBoardingCompleted';
   static const String loggedIn = 'isLoggedIn';
+  static const String userSetPinKey = 'userSetPin';
   static const String userInfoKey = 'userInfoKey';
   final String emailKey = 'emailKey';
   final String passwordKey = 'password';
@@ -33,15 +34,15 @@ class SharedPreference extends ChangeNotifier {
   }
 
   /// cache app first launch
-  void saveAppFirstLaunch(bool id) async {
+  void saveOnBoardingCompleted(bool id) async {
     prefs = await SharedPreferences.getInstance();
-    prefs!.setBool(firstLaunchKey, id);
+    prefs!.setBool(onBoardingCompletedKey, id);
     notifyListeners();
   }
   /// get app first launch
-  Future<bool> getAppFirstLaunch() async {
+  Future<bool> getOnBoardingCompleted() async {
     prefs = await SharedPreferences.getInstance();
-    return prefs!.getBool(firstLaunchKey) ?? false;
+    return prefs!.getBool(onBoardingCompletedKey) ?? false;
   }
 
   /// cache user logged in
@@ -54,6 +55,18 @@ class SharedPreference extends ChangeNotifier {
   Future<bool> getIsLoggedIn() async {
     prefs = await SharedPreferences.getInstance();
     return prefs!.getBool(loggedIn) ?? false;
+  }
+
+  /// cache user set pin
+  void saveIsUserSetPin(bool id) async {
+    prefs = await SharedPreferences.getInstance();
+    prefs!.setBool(userSetPinKey, id);
+    notifyListeners();
+  }
+  /// get user set pin
+  Future<bool> getIsUserSetPin() async {
+    prefs = await SharedPreferences.getInstance();
+    return prefs!.getBool(userSetPinKey) ?? false;
   }
 
   /// cache user email

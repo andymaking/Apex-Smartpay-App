@@ -1,11 +1,9 @@
-
-  var hasUpperCase = RegExp(r'[A-Z]');
-  var hasLowerCase = RegExp(r'[a-z]');
-  //var hasSymbols = RegExp(r"[!@#$%^&*(),\|+=;.?':{}|<>]");
-  var hasANumber = RegExp('(?=.*?[0-9])');
+var hasUpperCase = RegExp(r'[A-Z]');
+var hasLowerCase = RegExp(r'[a-z]');
+//var hasSymbols = RegExp(r"[!@#$%^&*(),\|+=;.?':{}|<>]");
+var hasANumber = RegExp('(?=.*?[0-9])');
 
 bool validatePassword(String? text) {
-
   bool validPassword = false;
   if (text == null) {
     validPassword = false;
@@ -29,29 +27,23 @@ bool validatePassword(String? text) {
   return validPassword;
 }
 
-PasswordStrength  checkPasswordStrength(String password){
+PasswordStrength checkPasswordStrength(String password) {
   var strength;
-  if(password.isEmpty){
+  if (password.isEmpty) {
     strength = PasswordStrength.weak;
-  }
-  else{
-    if(password.length <= 7){
+  } else {
+    if (password.length <= 7) {
       strength = PasswordStrength.weak;
-    }
-    else if(validatePassword(password)){
+    } else if (validatePassword(password)) {
       strength = PasswordStrength.strong;
-    }
-    else{
+    } else {
       strength = PasswordStrength.average;
     }
   }
   return strength;
 }
 
-
-
-
-enum PasswordStrength{
+enum PasswordStrength {
   weak,
   average,
   strong,
