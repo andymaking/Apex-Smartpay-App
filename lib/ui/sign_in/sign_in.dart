@@ -50,9 +50,10 @@ class _LoginScreen extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final model = context.read(signInProvider);
+    model.getSavedPinEmailAndPassword();
     final isValidUserInfo = useProvider(validSignInProvider);
     final userInfoViewState = useProvider(signInStateProvider);
-    final model = context.read(signInProvider);
 
     return Scaffold(
         resizeToAvoidBottomInset: false,

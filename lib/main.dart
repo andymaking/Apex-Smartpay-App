@@ -5,6 +5,7 @@ import 'package:Smartpay/routes/locator.dart';
 import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/ui/splash_screen/splash_screen.dart';
 import 'package:Smartpay/utils/constants.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,8 +17,10 @@ void main() async {
   runZonedGuarded(() {
     runApp(const ProviderScope(child: MyApp()));
   }, (dynamic error, dynamic stack) {
-    print(error);
-    print(stack);
+    if (kDebugMode) {
+      print(error);
+      print(stack);
+    }
   });
 }
 

@@ -18,7 +18,8 @@ class _SplashScreenState extends State<SplashScreen>
   late final AnimationController _controller;
 
    bool? isLogIn = false;
-   bool? isFirstAppLunch = false;
+   bool? isUserSetPin = false;
+   bool? onBoardingCompleted = false;
 
   @override
   void initState() {
@@ -34,10 +35,11 @@ class _SplashScreenState extends State<SplashScreen>
   }
   Future<Object> AppRelaunch() async {
     isLogIn = await sharedPreference.getIsLoggedIn();
-    isFirstAppLunch = await sharedPreference.getAppFirstLaunch();
-    if (isLogIn == true) {
+    isUserSetPin = await sharedPreference.getIsUserSetPin();
+    onBoardingCompleted = await sharedPreference.getOnBoardingCompleted();
+    if (isUserSetPin != null && isUserSetPin == true) {
       return navigationService.navigateToReplace(AppRoutes.enterPin);
-    }else if(isFirstAppLunch == true){
+    }else if(onBoardingCompleted != null && onBoardingCompleted == true){
       return navigationService.navigateToReplace(AppRoutes.signIn);
     } else {
       return navigationService.navigateToReplace(AppRoutes.onBoarding);

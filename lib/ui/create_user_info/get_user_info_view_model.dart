@@ -7,6 +7,7 @@ import 'package:Smartpay/routes/routes.dart';
 import 'package:Smartpay/ui/base_view_model.dart';
 import 'package:Smartpay/ui/components/custom_dialog.dart';
 import 'package:Smartpay/utils/constants.dart';
+import 'package:Smartpay/utils/validations.dart';
 import 'package:flutter/cupertino.dart';
 
 class GetUserInfoViewModel extends BaseViewModel {
@@ -69,19 +70,8 @@ class GetUserInfoViewModel extends BaseViewModel {
 
   void validUserInfo() {
     isValidUserInfo = fullName.isNotEmpty && userName.isNotEmpty &&
-        selectedCountryCode.isNotEmpty && isValidPassword() && isValidPasswordPattern();
+        selectedCountryCode.isNotEmpty && isValidPasswords(password);
     notifyListeners();
-  }
-
-  bool isValidPassword() {
-    return password.isNotEmpty && password.length >= 7;
-  }
-
-  bool isValidPasswordPattern() {
-    Pattern pattern =
-        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])';
-    RegExp regex = RegExp(pattern.toString());
-    return regex.hasMatch(password);
   }
 
   void setSelectedCountry(name) {
