@@ -181,9 +181,6 @@ class _SignUpScreen extends State<SignUpScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 124,
-                  ),
                 ],
               ),
               Padding(

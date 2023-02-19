@@ -80,7 +80,7 @@ class _GetUserInfoScreen extends State<GetUserInfoScreen> {
     print("showing just selected $countryN $countryNn");
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: FocusScope(
           node: _node,
